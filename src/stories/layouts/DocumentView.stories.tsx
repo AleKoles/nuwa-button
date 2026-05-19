@@ -1,6 +1,6 @@
+import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import {
-  AlignJustify,
   ArrowUp,
   Bot,
   BookOpen,
@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { ToggleButton } from '@/components/ui/toggle-button'
 
 // ─── Atoms ───────────────────────────────────────────────────────────────────
 
@@ -85,6 +86,8 @@ const NAV_ITEMS = [
 // ─── Layout ──────────────────────────────────────────────────────────────────
 
 function DocumentViewLayout() {
+  const [activeTab, setActiveTab] = React.useState<'chat' | 'docs'>('chat')
+
   return (
     <div className="flex flex-col overflow-hidden bg-background text-foreground antialiased" style={{ height: '100vh' }}>
 
@@ -114,26 +117,30 @@ function DocumentViewLayout() {
             Project Proposal — Digital Transformation Initiative
           </span>
           <div className="ml-2 flex shrink-0 items-center gap-1">
-            <Button variant="ghost" size="icon-sm" aria-label="Outline view">
-              <PanelLeft />
-            </Button>
-            <Button variant="ghost" size="icon-sm" aria-label="List view">
-              <AlignJustify />
-            </Button>
-            {/* accent — brand purple for active navigation state */}
-            <Button variant="accent" size="sm">
-              <MessageSquare /> Chat
-            </Button>
+            <ToggleButton
+              icon={<MessageSquare />}
+              active={activeTab === 'chat'}
+              onToggle={() => setActiveTab('chat')}
+              aria-label="Chat view"
+            >
+              Chat
+            </ToggleButton>
+            <ToggleButton
+              icon={<BookOpen />}
+              active={activeTab === 'docs'}
+              onToggle={() => setActiveTab('docs')}
+              aria-label="Docs view"
+            >
+              Docs
+            </ToggleButton>
           </div>
         </div>
 
         {/* Right: page-level actions */}
         <div className="flex shrink-0 items-center gap-2">
-          {/* outline — secondary, persistent low-emphasis action */}
           <Button variant="outline" size="sm">
             <Save /> Save version
           </Button>
-          {/* default — the single primary CTA on this surface */}
           <Button variant="default" size="sm">
             Continue <ChevronDown />
           </Button>
@@ -173,7 +180,6 @@ function DocumentViewLayout() {
                 <FileText size={14} className="shrink-0 text-primary" />
                 Meeting Notes
               </div>
-              {/* ghost icon-xs — utility action revealed on hover */}
               <Button
                 variant="ghost"
                 size="icon-xs"
@@ -191,7 +197,6 @@ function DocumentViewLayout() {
           <div className="px-2">
             <div className="flex items-center justify-between px-2.5">
               <p className="text-xs text-muted-foreground">Projects</p>
-              {/* ghost icon-xs — additive section action */}
               <Button variant="ghost" size="icon-xs" aria-label="New project">
                 <Plus size={12} />
               </Button>
@@ -220,12 +225,13 @@ function DocumentViewLayout() {
 
         {/* ── Centre — chat canvas ──────────────────────────────────────────── */}
         <main className="relative flex flex-1 flex-col overflow-hidden bg-background">
-          {/* Collapse right panel */}
+
+          {/* Collapse handle — round pill, floats against the panel edge */}
           <Button
-            variant="outline"
+            variant="ghost"
             size="icon-sm"
             aria-label="Collapse right panel"
-            className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-px rounded-r-none border-r-0 shadow-sm"
+            className="absolute right-0 top-1/2 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-border/60 bg-[var(--surface-elevated)] shadow-sm backdrop-blur-sm"
           >
             <ChevronLeft size={14} />
           </Button>
@@ -235,7 +241,6 @@ function DocumentViewLayout() {
             <div className="rounded-2xl border border-border bg-card px-3 pb-3 pt-3 shadow-md">
               <p className="mb-3 text-sm text-muted-foreground">Describe your task...</p>
               <div className="flex items-center gap-1">
-                {/* ghost — zero-weight toolbar utilities */}
                 <Button variant="ghost" size="icon-sm" aria-label="Attach">
                   <Plus />
                 </Button>
@@ -246,7 +251,6 @@ function DocumentViewLayout() {
                 <Button variant="ghost" size="icon-sm" aria-label="Voice input">
                   <Mic />
                 </Button>
-                {/* default — primary send action */}
                 <Button variant="default" size="icon-sm" aria-label="Send message">
                   <ArrowUp />
                 </Button>
@@ -256,21 +260,29 @@ function DocumentViewLayout() {
         </main>
 
         {/* ── Right panel — document viewer ────────────────────────────────── */}
-        <div className="relative flex w-[520px] shrink-0 flex-col border-l border-border bg-background">
-          <div className="p-4 pb-2">
-            <Avatar initials="SW" bg="#B45309" />
+        <aside className="relative flex w-[42%] min-w-[420px] shrink-0 flex-col bg-card">
+
+          <div className="p-8 pb-4">
+            <Avatar initials="SW" bg="#D6B16D" />
           </div>
 
-          {/* Document page card */}
-          <div className="mx-4 mb-4 flex-1 rounded-xl border border-border bg-card" />
-
-          {/* Page navigation pill */}
-          <div className="absolute right-3 top-1/2 flex -translate-y-1/2 flex-col items-center gap-0.5 rounded-full border border-border bg-card px-2 py-2 shadow-sm">
-            <ChevronUp size={12} className="text-muted-foreground" />
-            <span className="font-mono text-[10px] text-foreground">1/5</span>
-            <ChevronDown size={12} className="text-muted-foreground" />
+          {/* Document card */}
+          <div className="flex-1 px-8 pb-8">
+            <div className="h-full rounded-xl border border-border/50 bg-[var(--surface-subtle)]" />
           </div>
-        </div>
+
+          {/* Pager pill */}
+          <div className="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 rounded-full border border-border/60 bg-[var(--surface-elevated)] px-3 py-4 shadow-sm backdrop-blur-sm">
+            <Button variant="ghost" size="icon-xs" aria-label="Previous page">
+              <ChevronUp size={12} />
+            </Button>
+            <span className="text-[11px] text-muted-foreground">1/5</span>
+            <Button variant="ghost" size="icon-xs" aria-label="Next page">
+              <ChevronDown size={12} />
+            </Button>
+          </div>
+
+        </aside>
 
       </div>
     </div>

@@ -4,7 +4,13 @@
   "private": false,
   "type": "module",
   "description": "DS UI — token-driven design system built with React, Tailwind v4, and shadcn/ui",
-  "keywords": ["design-system", "react", "tailwind", "shadcn", "components"],
+  "keywords": [
+    "design-system",
+    "react",
+    "tailwind",
+    "shadcn",
+    "components"
+  ],
   "license": "MIT",
   "exports": {
     ".": {
@@ -37,6 +43,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@fontsource-variable/figtree": "^5.2.10",
     "@fontsource-variable/geist": "^5.2.8",
     "@tailwindcss/vite": "^4.3.0",
     "class-variance-authority": "^0.7.1",

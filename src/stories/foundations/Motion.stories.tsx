@@ -161,7 +161,7 @@ export const Tokens: Story = {
         <tbody className="divide-y divide-border">
           {[
             ['--duration-fast',   '120ms',                           'Hover states, micro-interactions'],
-            ['--duration-normal', '200ms',                           'Most UI transitions'],
+            ['--duration-normal', '180ms',                           'Most UI transitions'],
             ['--duration-slow',   '320ms',                           'Panels, modals, large motion'],
             ['--ease-in',         'cubic-bezier(0.4, 0, 1, 1)',      'Elements leaving the screen'],
             ['--ease-out',        'cubic-bezier(0, 0, 0.2, 1)',      'Elements entering the screen'],

@@ -211,9 +211,9 @@
        Brand semantics
        ================================= */
   
-    /* Dark mode primary */
-    --primary: var(--color-purple-400);
-    --primary-foreground: var(--color-neutral-950);
+    /* Dark mode primary — same purple as light, white text (5.7:1 contrast, WCAG AA) */
+    --primary: var(--color-purple-600);
+    --primary-foreground: var(--color-white);
   
     --secondary: rgba(167,139,250,0.12);
     --secondary-foreground: #C4B5FD;
@@ -403,7 +403,9 @@
       background-color var(--duration-fast) var(--ease-out),
       border-color var(--duration-fast) var(--ease-out),
       color var(--duration-fast) var(--ease-out),
-      opacity var(--duration-fast) var(--ease-out);
+      opacity var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
   
     --transition-normal:
       background-color var(--duration-normal) var(--ease-out),
@@ -609,7 +611,20 @@
     /* =================================
        Active states
        ================================= */
-  
+
     --color-active-bg: var(--active-bg);
     --color-active-fg: var(--active-fg);
+
+    /* =================================
+       Radius — must live in @theme so
+       rounded-sm/md/lg/xl utilities use
+       our scale, not Tailwind's defaults
+       ================================= */
+
+    --radius-none: 0;
+    --radius-sm:   0.25rem;   /* 4px  */
+    --radius-md:   0.5rem;    /* 8px  */
+    --radius-lg:   0.75rem;   /* 12px */
+    --radius-xl:   1rem;      /* 16px */
+    --radius-full: 9999px;
   }

@@ -5,107 +5,83 @@
 @import "./tokens/index.css";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+
+/* 1. Import Figtree Variable Font */
+@import "@fontsource-variable/figtree";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Minimal resets only */
+/* Minimal resets and application baseline */
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Optional: root baseline */
 #root {
   min-height: 100vh;
 }
 
-@theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: 'Geist Variable', sans-serif;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-action-foreground: var(--action-foreground);
-  --color-action: var(--action);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-}
-
-/* Radius — matches src/tokens/index.css exactly (no calc drift) */
+/* =========================================
+   TAILWIND v4 APPLICATION THEME OVERRIDES
+   ========================================= */
 @theme {
-  --radius-none: 0;
-  --radius-sm: 0.25rem;    /* 4px  */
-  --radius-md: 0.5rem;     /* 8px  — button / input / chip */
-  --radius-lg: 0.75rem;    /* 12px — card / panel */
-  --radius-xl: 1rem;       /* 16px — dialog / modal */
-  --radius-full: 9999px;
+  /* 2. Map Tailwind's default sans to Figtree */
+  --font-sans: 'Figtree Variable', sans-serif;
+  --font-heading: var(--font-sans);
+
+  /* 3. Non-brand specific tokens unique to shadcn components */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 }
 
-/* Non-brand tokens not covered by tokens/index.css */
+/* Component semantic variables not declared in tokens file */
 :root {
-  --radius: var(--radius-md);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: var(--color-neutral-100);
+
+  --sidebar: var(--color-warm-100); /* Bound to primitive warm neutral */
   --sidebar-foreground: var(--color-neutral-900);
   --sidebar-primary: var(--color-purple-600);
   --sidebar-primary-foreground: var(--color-white);
   --sidebar-accent: var(--color-purple-100);
   --sidebar-accent-foreground: var(--color-purple-600);
-  --sidebar-border: var(--color-neutral-200);
+  --sidebar-border: #E8E8E5;
   --sidebar-ring: var(--color-purple-600);
 }
 
 .dark {
   --sidebar: var(--color-dark-900);
-  --sidebar-foreground: var(--color-white);
+  --sidebar-foreground: var(--color-neutral-100);
   --sidebar-primary: var(--color-purple-600);
   --sidebar-primary-foreground: var(--color-white);
   --sidebar-accent: var(--color-dark-800);
   --sidebar-accent-foreground: var(--color-white);
   --sidebar-border: var(--color-dark-border);
-  --sidebar-ring: var(--color-purple-600);
+  --sidebar-ring: var(--color-purple-400);
 }
 
+/* Apply base font classes to the document */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+    @apply bg-background text-foreground font-sans;
   }
 }
