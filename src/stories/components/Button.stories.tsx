@@ -1,3 +1,4 @@
+import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { fn } from 'storybook/test'
 import {
@@ -32,6 +33,11 @@ const ICON_MAP = {
 
 type IconName = keyof typeof ICON_MAP
 
+type PlaygroundArgs = React.ComponentProps<typeof Button> & {
+  iconPosition: 'none' | 'before' | 'after' | 'icon-only'
+  iconName: IconName
+}
+
 // ─── Meta ────────────────────────────────────────────────────────────────────
 
 const meta = {
@@ -49,19 +55,26 @@ const meta = {
   ],
   argTypes: {
     variant: {
+      description:
+        'Controls visual weight and semantic role. Use **default** for the one primary action per view, **accent** for brand/feature context, **outline** for secondary alongside default, **ghost** for toolbar/icon actions.',
       control: 'select',
       options: ['default', 'accent', 'outline', 'secondary', 'ghost', 'destructive', 'link'],
     },
     size: {
+      description: 'Height and padding scale. `icon-*` sizes are square — always add `aria-label`.',
       control: 'select',
       options: ['xs', 'sm', 'default', 'lg', 'icon', 'icon-xs', 'icon-sm', 'icon-lg'],
     },
     shape: {
+      description: '`square` = 8 px radius (default). `round` = pill — use for floating actions or a softer visual register.',
       control: 'inline-radio',
       options: ['square', 'round'],
     },
     disabled: { control: 'boolean' },
-    loading: { control: 'boolean' },
+    loading: {
+      description: 'Shows a spinner and blocks interaction. Text buttons show "Loading…"; icon-only sizes show the spinner alone.',
+      control: 'boolean',
+    },
     children: { control: 'text' },
     asChild: { table: { disable: true } },
   },
@@ -83,7 +96,6 @@ type Story = StoryObj<typeof meta>
 // ─── Playground — fully interactive via controls panel ───────────────────────
 
 export const Playground: Story = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   argTypes: {
     iconPosition: {
       description: 'Where to place the icon relative to the label',
@@ -97,12 +109,10 @@ export const Playground: Story = {
       options: Object.keys(ICON_MAP),
       table: { category: 'Icon' },
     },
-  } as any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args: { iconPosition: 'none', iconName: 'Plus' } as any,
+  } as unknown as Record<string, object>,
+  args: { iconPosition: 'none', iconName: 'Plus' } as unknown as Story['args'],
   render(args) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { iconPosition, iconName, children, ...buttonProps } = args as any
+    const { iconPosition, iconName, children, ...buttonProps } = args as unknown as PlaygroundArgs
     const IconComp = ICON_MAP[iconName as IconName] ?? Plus
 
     if (iconPosition === 'icon-only') {
@@ -133,6 +143,82 @@ export const Playground: Story = {
       </Button>
     )
   },
+}
+
+// ─── When to use ─────────────────────────────────────────────────────────────
+
+export const WhenToUse: Story = {
+  name: 'When to use',
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div className="w-full max-w-2xl">
+      <p className="mb-4 text-xs text-muted-foreground">
+        Each variant has one semantic role. Using the wrong one breaks visual hierarchy.
+      </p>
+      <div className="divide-y divide-border rounded-lg border border-border overflow-hidden">
+        {([
+          {
+            variant: 'default' as const,
+            token: '--action',
+            rule: 'One primary decision per view',
+            examples: 'Continue, Submit, Save',
+            el: <Button size="sm">Continue</Button>,
+          },
+          {
+            variant: 'accent' as const,
+            token: '--primary',
+            rule: 'Brand context — upgrades, active feature toggles',
+            examples: 'Upgrade, Activate, Try it',
+            el: <Button variant="accent" size="sm">Upgrade</Button>,
+          },
+          {
+            variant: 'outline' as const,
+            token: '--border',
+            rule: 'Secondary alongside default — never looks disabled',
+            examples: 'Cancel, Export, Duplicate',
+            el: <Button variant="outline" size="sm">Cancel</Button>,
+          },
+          {
+            variant: 'secondary' as const,
+            token: '--secondary',
+            rule: 'Tertiary brand-tinted — filters, tags, contextual',
+            examples: 'Filter, Label, Assign',
+            el: <Button variant="secondary" size="sm">Filter</Button>,
+          },
+          {
+            variant: 'ghost' as const,
+            token: '—',
+            rule: 'Toolbars and sidebars — lowest visual weight',
+            examples: 'Settings, More, icon-only actions',
+            el: <Button variant="ghost" size="icon-sm" aria-label="Settings"><Settings /></Button>,
+          },
+          {
+            variant: 'destructive' as const,
+            token: '--destructive',
+            rule: 'Irreversible actions — always pair with confirmation',
+            examples: 'Delete, Remove, Revoke',
+            el: <Button variant="destructive" size="sm"><Trash2 /> Delete</Button>,
+          },
+          {
+            variant: 'link' as const,
+            token: '--primary',
+            rule: 'Inline prose or low-hierarchy text actions',
+            examples: 'Learn more, View all, See details',
+            el: <Button variant="link" size="sm">Learn more</Button>,
+          },
+        ] as const).map(({ variant, token, rule, examples, el }) => (
+          <div key={variant} className="grid grid-cols-[5.5rem_1fr_auto] items-center gap-4 bg-background px-4 py-3 hover:bg-muted/50">
+            <span className="font-mono text-xs text-muted-foreground">{variant}</span>
+            <div>
+              <p className="text-xs font-medium text-foreground">{rule}</p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">{examples} · <span className="font-mono">{token}</span></p>
+            </div>
+            {el}
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
 }
 
 // ─── Variants ────────────────────────────────────────────────────────────────

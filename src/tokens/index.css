@@ -74,67 +74,75 @@
   /* =========================
      SEMANTIC TOKENS (LIGHT MODE)
      Used by components + shadcn/ui
+     ─────────────────────────────
+     Action hierarchy (buttons):
+       action    → one primary CTA per view; highest contrast, hardest to ignore
+       primary   → brand presence — active states, upgrades, feature toggles
+       outline   → secondary alongside action; visible, never looks disabled
+       secondary → tertiary brand-tinted — filters, tags, chips
+       muted     → hover / suppress / non-interactive fills
      ========================= */
-  
+
   :root {
     /* =================================
-       Core surfaces
+       Core surfaces — elevation order: background → card → popover
        ================================= */
-  
+
     --background: var(--color-warm-50);
     --foreground: var(--color-neutral-900);
-  
-    --card: var(--color-warm-100);
+
+    --card: var(--color-warm-100);           /* panels, sidebars, raised surfaces */
     --card-foreground: var(--color-neutral-900);
-  
-    --popover: var(--color-white);
+
+    --popover: var(--color-white);           /* dropdowns, tooltips, floating UI */
     --popover-foreground: var(--color-neutral-900);
-  
+
     /* =================================
        Brand semantics
        ================================= */
-  
-    --primary: var(--color-purple-600);
+
+    --primary: var(--color-purple-600);      /* brand accent — active tabs, upgrades, feature CTAs */
     --primary-foreground: var(--color-white);
-  
-    --secondary: var(--color-purple-100);
+
+    --secondary: var(--color-purple-100);    /* tertiary brand-tinted surface — filters, tags, chips */
     --secondary-foreground: var(--color-purple-600);
-  
-    --accent: var(--color-orange-500);
+
+    --accent: var(--color-orange-500);       /* reserved for decorative highlights, not interactive */
     --accent-foreground: var(--color-white);
-  
+
     /* =================================
        Muted surfaces
        ================================= */
-  
-    --muted: var(--color-warm-200);
-    --muted-foreground: var(--color-neutral-500);
-  
+
+    --muted: var(--color-warm-200);          /* hover fills, disabled backgrounds, suppressed areas */
+    --muted-foreground: var(--color-neutral-500); /* secondary text, labels, placeholders */
+
     /* =================================
        Destructive
+       Tonal approach — red tint, never solid fill, always confirmable
        ================================= */
-  
+
     --destructive: var(--color-error);
     --destructive-foreground: var(--color-white);
-  
-    /* Accessible tonal destructive */
-    --destructive-text: var(--color-error-light);
-    --destructive-subtle: #FEF2F2;
-    --destructive-border: #FCA5A5;
-  
+
+    --destructive-text: var(--color-error-light);  /* text inside destructive surfaces */
+    --destructive-subtle: #FEF2F2;                  /* button / chip background */
+    --destructive-border: #FCA5A5;                  /* button / chip border */
+
     /* =================================
        Inputs / borders
        ================================= */
-  
-    --border: #E8E8E5;
-    --input: #E8E8E5;
-  
-    --ring: var(--color-purple-600);
-  
+
+    --border: #E8E8E5;                       /* structural dividers and outlines */
+    --input: #E8E8E5;                        /* form field borders */
+
+    --ring: var(--color-purple-600);         /* keyboard focus ring — always brand purple */
+
     /* =================================
        High-contrast action
+       One primary CTA per view — black in light mode, white in dark mode
        ================================= */
-  
+
     --action: var(--color-neutral-950);
     --action-foreground: var(--color-white);
   
