@@ -1,0 +1,22 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="UI Analysis" />
+
+# UI Analysis: Button & Action Patterns
+
+* **No Clear Hierarchy:** Buttons are styled individually instead of following a shared system. High-contrast styling is used for both the main header action ("Continue") and the sidebar action ("+ New Doc"), making it hard to see what matters most.
+* **Inconsistent Corner Radii:** Buttons lack a single rule for roundness. They accidentally shift between a 5px and 10px corner radius depending on the screen.
+* **Mixed Actions and States:** The system uses high-contrast fills for actions and purple for active states like the "Docs" tab, but the rules are not defined. This blurs the line between navigating and taking an action.
+* **Looks Disabled or Hidden:** The "Save version" button has low contrast. In dark mode, it blends into the background and is hard to find. In light mode, the light gray styling makes it look completely unclickable.
+* **Inconsistent Motion:** Transition behaviors feel disjointed. Switching between the Docs and Chat tabs feels abrupt and snappy, while clicking the "Continue" dropdown uses a smooth, slower animation. 
+
+---
+
+### Core Fixes Needed
+
+1. **Define Strict Style Rules:** Assign one specific job to each button style:
+   * **Primary:** High-contrast solid fill for the main page-level decision only.
+   * **Brand Accent:** Purple signals brand context (active tabs, feature toggles, brand-specific actions) instead of primary page-level decisions.
+   * **Secondary:** Clear outlines that never look gray or disabled.
+2. **Fix the Corner Radii:** Use one fixed corner radius token for all action buttons to remove the 5px and 10px variance. Keep them distinct from pill-shaped navigation tabs so users know the difference between clicking an action and switching a view.
+3. **Align Motion Behaviors:** Standardize easing and duration tokens across all interactions so tab switching and dropdown transitions share a unified feel.

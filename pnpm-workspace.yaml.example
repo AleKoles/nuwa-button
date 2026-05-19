@@ -1,0 +1,23 @@
+# Rename this to pnpm-workspace.yaml at the monorepo root.
+#
+# Example monorepo structure:
+#
+#   my-monorepo/
+#   ├── apps/
+#   │   ├── web/          ← Next.js marketing site
+#   │   └── app/          ← Next.js main product
+#   ├── packages/
+#   │   └── ui/           ← this repo
+#   ├── turbo.json
+#   └── pnpm-workspace.yaml
+#
+# Consuming apps install the package:
+#   pnpm add @nuwa/ui --filter web
+#
+# Then import:
+#   import { Button, Card } from '@nuwa/ui'
+#   import '@nuwa/ui/styles'
+
+packages:
+  - 'apps/*'
+  - 'packages/*'

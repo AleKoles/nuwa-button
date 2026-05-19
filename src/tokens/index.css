@@ -1,0 +1,615 @@
+/* ─────────────────────────────────────
+   DESIGN TOKENS — SINGLE SOURCE OF TRUTH
+   Tailwind v4 + shadcn-compatible system
+   ───────────────────────────────────── */
+
+/* =========================
+   PRIMITIVE TOKENS
+   (Never used directly in components)
+   ========================= */
+
+   :root {
+    /* =================================
+       Brand colors
+       ================================= */
+  
+    --color-purple-900: #2D1B69;
+    --color-purple-600: #7C3AED;
+    --color-purple-400: #A78BFA; /* Lighter purple for dark mode text readability */
+    --color-purple-100: #EDE9FE;
+  
+    --color-orange-500: #F97316;
+    --color-orange-100: #FFEDD5;
+  
+    /* =================================
+       Neutral
+       ================================= */
+  
+    --color-neutral-950: #0A0A0A;
+    --color-neutral-900: #1A1A2E;
+    --color-neutral-700: #4B5563; /* ADDED */
+    --color-neutral-500: #6B7280;
+    --color-neutral-400: #9CA3AF;
+    --color-neutral-300: #D1D5DB; /* ADDED */
+    --color-neutral-200: #E5E7EB;
+    --color-neutral-100: #ECECEC;
+  
+    --color-white: #FFFFFF;
+  
+    /* =================================
+       Warm neutrals (ADDED)
+       Used for premium soft surfaces
+       ================================= */
+  
+    --color-warm-50: #F6F6F4;
+    --color-warm-100: #F3F3F1;
+    --color-warm-200: #EBEAE6;
+  
+    /* =================================
+       Dark mode surfaces
+       Refined tonal separation
+       ================================= */
+  
+    --color-dark-950: #232426; /* refined */
+    --color-dark-900: #2A2B2E;
+    --color-dark-800: #323438;
+    --color-dark-700: #3A3C40; /* ADDED */
+  
+    --color-dark-border: #3A3C40;
+  
+    /* =================================
+       Status primitives
+       ================================= */
+  
+    --color-error: #EF4444;
+  
+    --color-error-light: #B91C1C;
+    --color-error-dark: #FCA5A5;
+  
+    --color-success: #22C55E;
+    --color-warning: #F59E0B;
+  }
+  
+  
+  /* =========================
+     SEMANTIC TOKENS (LIGHT MODE)
+     Used by components + shadcn/ui
+     ========================= */
+  
+  :root {
+    /* =================================
+       Core surfaces
+       ================================= */
+  
+    --background: var(--color-warm-50);
+    --foreground: var(--color-neutral-900);
+  
+    --card: var(--color-warm-100);
+    --card-foreground: var(--color-neutral-900);
+  
+    --popover: var(--color-white);
+    --popover-foreground: var(--color-neutral-900);
+  
+    /* =================================
+       Brand semantics
+       ================================= */
+  
+    --primary: var(--color-purple-600);
+    --primary-foreground: var(--color-white);
+  
+    --secondary: var(--color-purple-100);
+    --secondary-foreground: var(--color-purple-600);
+  
+    --accent: var(--color-orange-500);
+    --accent-foreground: var(--color-white);
+  
+    /* =================================
+       Muted surfaces
+       ================================= */
+  
+    --muted: var(--color-warm-200);
+    --muted-foreground: var(--color-neutral-500);
+  
+    /* =================================
+       Destructive
+       ================================= */
+  
+    --destructive: var(--color-error);
+    --destructive-foreground: var(--color-white);
+  
+    /* Accessible tonal destructive */
+    --destructive-text: var(--color-error-light);
+    --destructive-subtle: #FEF2F2;
+    --destructive-border: #FCA5A5;
+  
+    /* =================================
+       Inputs / borders
+       ================================= */
+  
+    --border: #E8E8E5;
+    --input: #E8E8E5;
+  
+    --ring: var(--color-purple-600);
+  
+    /* =================================
+       High-contrast action
+       ================================= */
+  
+    --action: var(--color-neutral-950);
+    --action-foreground: var(--color-white);
+  
+    /* =================================
+       NEW — Surface hierarchy
+       ================================= */
+  
+    --surface-base: var(--background);
+  
+    /* panels / sidebars */
+    --surface-panel: var(--card);
+  
+    /* subtle nested surfaces */
+    --surface-subtle: #F8F8F7;
+  
+    /* floating elevated surfaces */
+    --surface-elevated: rgba(255,255,255,0.88);
+  
+    /* hover overlays */
+    --surface-hover: rgba(0,0,0,0.035);
+  
+    /* selected states */
+    --surface-active: rgba(124,58,237,0.08);
+  
+    /* =================================
+       NEW — Workspace semantics
+       ================================= */
+  
+    --workspace-canvas: var(--background);
+    --workspace-sidebar: var(--card);
+    --workspace-toolbar: rgba(255,255,255,0.72);
+  
+    --document-surface: #F8F8F7;
+  
+    /* =================================
+       NEW — Active states
+       ================================= */
+  
+    --active-bg: #EEE7FF;
+    --active-fg: #6D4AFF;
+  
+    /* =================================
+       Interaction
+       ================================= */
+  
+    --focus-ring:
+      0 0 0 2px var(--color-white),
+      0 0 0 4px rgba(124,58,237,0.45);
+  
+    --overlay: rgba(45, 27, 105, 0.6);
+  }
+  
+  
+  /* =========================
+     SEMANTIC TOKENS (DARK MODE)
+     Used by components + shadcn/ui
+     ========================= */
+  
+  .dark {
+    /* =================================
+       Core surfaces
+       ================================= */
+  
+    --background: var(--color-dark-950);
+    --foreground: var(--color-neutral-100);
+  
+    --card: var(--color-dark-900);
+    --card-foreground: var(--color-neutral-100);
+  
+    --popover: var(--color-dark-900);
+    --popover-foreground: var(--color-neutral-100);
+  
+    /* =================================
+       Brand semantics
+       ================================= */
+  
+    /* Dark mode primary */
+    --primary: var(--color-purple-400);
+    --primary-foreground: var(--color-neutral-950);
+  
+    --secondary: rgba(167,139,250,0.12);
+    --secondary-foreground: #C4B5FD;
+  
+    --accent: var(--color-orange-500);
+    --accent-foreground: var(--color-white);
+  
+    /* =================================
+       Muted surfaces
+       ================================= */
+  
+    --muted: var(--color-dark-800);
+    --muted-foreground: var(--color-neutral-400);
+  
+    /* =================================
+       Destructive
+       ================================= */
+  
+    --destructive: var(--color-error);
+    --destructive-foreground: var(--color-white);
+  
+    --destructive-text: var(--color-error-dark);
+    --destructive-subtle: #4B2A2B;
+    --destructive-border: #7F1D1D;
+  
+    /* =================================
+       Inputs / borders
+       ================================= */
+  
+    --border: var(--color-dark-border);
+    --input: var(--color-dark-border);
+  
+    --ring: var(--color-purple-400);
+  
+    /* =================================
+       High-contrast action
+       ================================= */
+  
+    --action: var(--color-white);
+    --action-foreground: var(--color-neutral-950);
+  
+    /* =================================
+       NEW — Surface hierarchy
+       ================================= */
+  
+    --surface-base: var(--background);
+  
+    --surface-panel: var(--card);
+  
+    --surface-subtle: #26282B;
+  
+    --surface-elevated: rgba(42,43,46,0.9);
+  
+    --surface-hover: rgba(255,255,255,0.045);
+  
+    --surface-active: rgba(167,139,250,0.12);
+  
+    /* =================================
+       NEW — Workspace semantics
+       ================================= */
+  
+    --workspace-canvas: var(--background);
+    --workspace-sidebar: var(--card);
+    --workspace-toolbar: rgba(42,43,46,0.72);
+  
+    --document-surface: #2B2D31;
+  
+    /* =================================
+       NEW — Active states
+       ================================= */
+  
+    --active-bg: rgba(167,139,250,0.14);
+    --active-fg: #C4B5FD;
+  
+    /* =================================
+       Interaction
+       ================================= */
+  
+    --focus-ring:
+      0 0 0 2px var(--color-dark-950),
+      0 0 0 4px rgba(167,139,250,0.5);
+  
+    --overlay: rgba(0,0,0,0.6);
+  }
+  
+  
+  /* =========================
+     BRAND TOKENS
+     ========================= */
+  
+  :root {
+    --color-brand-navbar: var(--color-purple-900);
+  
+    --color-brand-primary: var(--color-purple-600);
+    --color-brand-accent: var(--color-orange-500);
+  
+    --color-brand-gradient: linear-gradient(
+      to right,
+      var(--color-orange-500),
+      var(--color-purple-600)
+    );
+  }
+  
+  
+  /* =========================
+     SYSTEM TOKENS
+     (UI behavior, layout, elevation)
+     ========================= */
+  
+  :root {
+    /* =================================
+       Radius
+       Refined to match premium desktop UI
+       ================================= */
+  
+    --radius-none: 0;
+
+    --radius-sm: 0.25rem;    /* 4px  */
+    --radius-md: 0.5rem;     /* 8px  — button / input / chip */
+    --radius-lg: 0.75rem;    /* 12px — card / panel */
+    --radius-xl: 1rem;       /* 16px — dialog / modal */
+
+    --radius-full: 9999px;
+
+    --radius: var(--radius-md);
+  
+    /* =================================
+       Shadows
+       Softer / atmospheric
+       ================================= */
+  
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  
+    --shadow-md:
+      0 6px 20px rgba(0,0,0,0.06);
+  
+    --shadow-lg:
+      0 16px 40px rgba(0,0,0,0.08);
+  
+    --shadow-xl:
+      0 24px 60px rgba(0,0,0,0.12);
+  
+    /* =================================
+       NEW — Elevation shadows
+       ================================= */
+  
+    --shadow-elevated:
+      0 8px 30px rgba(0,0,0,0.08);
+  
+    --shadow-floating:
+      0 12px 40px rgba(0,0,0,0.1);
+  
+    /* =================================
+       Z-index
+       ================================= */
+  
+    --z-0: 0;
+    --z-10: 10;
+    --z-20: 20;
+    --z-30: 30;
+    --z-40: 40;
+    --z-50: 50;
+  
+    --z-dropdown: 1000;
+    --z-sticky: 1100;
+    --z-overlay: 1200;
+    --z-modal: 1300;
+    --z-toast: 1400;
+  
+    /* =================================
+       Motion
+       ================================= */
+  
+    --duration-fast: 120ms;
+    --duration-normal: 180ms;
+    --duration-slow: 320ms;
+  
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  
+    /* =================================
+       NEW — Common transitions
+       ================================= */
+  
+    --transition-fast:
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out),
+      opacity var(--duration-fast) var(--ease-out);
+  
+    --transition-normal:
+      background-color var(--duration-normal) var(--ease-out),
+      border-color var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out),
+      opacity var(--duration-normal) var(--ease-out);
+  }
+  
+  
+  /* =========================
+     TYPOGRAPHY TOKENS
+     ========================= */
+  
+  :root {
+    /* =================================
+       Font sizes
+       ================================= */
+  
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+  
+    /* =================================
+       NEW — UI typography sizes
+       ================================= */
+  
+    --font-size-ui-xs: 0.6875rem;
+    --font-size-ui-sm: 0.8125rem;
+    --font-size-ui-base: 0.9375rem;
+  
+    /* =================================
+       Font weights
+       ================================= */
+  
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+  
+    /* =================================
+       Line heights
+       ================================= */
+  
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+  
+    /* =================================
+       NEW — Tracking
+       ================================= */
+  
+    --letter-spacing-tight: -0.02em;
+    --letter-spacing-normal: -0.01em;
+  }
+  
+  
+  /* =========================
+     SPACING TOKENS
+     ========================= */
+  
+  :root {
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+  
+    /* =================================
+       NEW — Dense UI spacing
+       ================================= */
+  
+    --space-0-5: 0.125rem;
+    --space-1-5: 0.375rem;
+    --space-2-5: 0.625rem;
+    --space-5: 1.25rem;
+    --space-10: 2.5rem;
+  
+    /* =================================
+       NEW — Layout sizing
+       ================================= */
+  
+    --sidebar-width: 300px;
+    --topbar-height: 56px;
+    --composer-width: 520px;
+  }
+  
+  
+  /* =========================
+     CONTROL TOKENS (NEW)
+     Standardized component sizing
+     ========================= */
+  
+  :root {
+    --control-xs: 24px;
+    --control-sm: 32px;
+    --control-md: 40px;
+    --control-lg: 48px;
+  
+    --icon-xs: 12px;
+    --icon-sm: 14px;
+    --icon-md: 16px;
+    --icon-lg: 20px;
+  }
+  
+  
+  /* =========================================
+     TAILWIND v4 ENGINE THEME ENGINE MAPPING
+     ========================================= */
+  
+  @theme {
+    /* =================================
+       Core
+       ================================= */
+  
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+  
+    /* =================================
+       Cards / popovers
+       ================================= */
+  
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+  
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+  
+    /* =================================
+       Brand semantics
+       ================================= */
+  
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+  
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+  
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+  
+    /* =================================
+       Muted
+       ================================= */
+  
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+  
+    /* =================================
+       Destructive
+       ================================= */
+  
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+  
+    --color-destructive-text: var(--destructive-text);
+    --color-destructive-subtle: var(--destructive-subtle);
+    --color-destructive-border: var(--destructive-border);
+  
+    /* =================================
+       Inputs / borders
+       ================================= */
+  
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+  
+    /* =================================
+       Action
+       ================================= */
+  
+    --color-action: var(--action);
+    --color-action-foreground: var(--action-foreground);
+  
+    /* =================================
+       NEW — Surface mappings
+       ================================= */
+  
+    --color-surface-base: var(--surface-base);
+    --color-surface-panel: var(--surface-panel);
+    --color-surface-subtle: var(--surface-subtle);
+    --color-surface-elevated: var(--surface-elevated);
+  
+    --color-surface-hover: var(--surface-hover);
+    --color-surface-active: var(--surface-active);
+  
+    /* =================================
+       Workspace mappings
+       ================================= */
+  
+    --color-workspace-canvas: var(--workspace-canvas);
+    --color-workspace-sidebar: var(--workspace-sidebar);
+    --color-workspace-toolbar: var(--workspace-toolbar);
+  
+    --color-document-surface: var(--document-surface);
+  
+    /* =================================
+       Active states
+       ================================= */
+  
+    --color-active-bg: var(--active-bg);
+    --color-active-fg: var(--active-fg);
+  }
