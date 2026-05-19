@@ -239,7 +239,7 @@ function DocumentViewLayout() {
             variant="ghost"
             size="icon-sm"
             aria-label="Collapse right panel"
-            className="absolute right-0 top-1/2 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-border/60 bg-[var(--surface-elevated)] shadow-sm backdrop-blur-sm"
+            className="absolute right-0 top-1/2 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-border/60 bg-(--surface-elevated) shadow-sm backdrop-blur-sm"
           >
             <ChevronLeft size={14} />
           </Button>
@@ -280,7 +280,7 @@ function DocumentViewLayout() {
           </div>
 
           {/* Pager pill */}
-          <div className="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 rounded-full border border-border/60 bg-[var(--surface-elevated)] px-3 py-4 shadow-sm backdrop-blur-sm">
+          <div className="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 rounded-full border border-border/60 bg-(--surface-elevated) px-3 py-4 shadow-sm backdrop-blur-sm">
             <Button variant="ghost" size="icon-xs" aria-label="Previous page">
               <ChevronUp size={12} />
             </Button>

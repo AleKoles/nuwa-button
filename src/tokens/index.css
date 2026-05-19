@@ -127,6 +127,7 @@
 
     --destructive-text: var(--color-error-light);  /* text inside destructive surfaces */
     --destructive-subtle: #FEF2F2;                  /* button / chip background */
+    --destructive-subtle-hover: #FEE2E2;             /* button / chip hover */
     --destructive-border: #FCA5A5;                  /* button / chip border */
 
     /* =================================
@@ -245,6 +246,7 @@
   
     --destructive-text: var(--color-error-dark);
     --destructive-subtle: #4B2A2B;
+    --destructive-subtle-hover: #5C3335;
     --destructive-border: #7F1D1D;
   
     /* =================================
@@ -577,6 +579,7 @@
   
     --color-destructive-text: var(--destructive-text);
     --color-destructive-subtle: var(--destructive-subtle);
+    --color-destructive-subtle-hover: var(--destructive-subtle-hover);
     --color-destructive-border: var(--destructive-border);
   
     /* =================================

@@ -6,7 +6,7 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap [transition:var(--transition-fast)] outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-[0.5px] disabled:pointer-events-none disabled:opacity-50 data-[loading=true]:opacity-100 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap [transition:var(--transition-fast)] outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-[0.5px] data-[pressing]:translate-y-[0.5px] disabled:pointer-events-none disabled:opacity-50 data-[loading=true]:opacity-100 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -25,7 +25,7 @@ const buttonVariants = cva(
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         /** Destructive action — red tint. Completely WCAG AA compliant across themes. */
         destructive:
-          "bg-destructive-subtle text-destructive-text border border-destructive-border hover:bg-[#FEE2E2] dark:hover:bg-[#5C3335] focus-visible:border-destructive-border focus-visible:ring-destructive/20",
+          "bg-destructive-subtle text-destructive-text border border-destructive-border hover:bg-destructive-subtle-hover focus-visible:border-destructive-border focus-visible:ring-destructive/20",
         /** Inline link — no background, underline on hover. Use inside prose or as a text action. */
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -108,6 +108,9 @@ function Button({
   loading = false,
   disabled,
   children,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
@@ -119,6 +122,26 @@ function Button({
   const Comp = asChild && !loading ? Slot.Root : "button"
   const isIconSize = ICON_SIZES.has(size ?? "default")
 
+  // Mirror the CSS active:translate-y for keyboard activation (Enter/Space).
+  // `:active` resolves in the same frame as the click on keyboard, so the
+  // 120ms transition never runs without this explicit data attribute.
+  function handleKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
+    onKeyDown?.(e)
+    if ((e.key === "Enter" || e.key === " ") && !e.currentTarget.getAttribute("aria-haspopup")) {
+      e.currentTarget.setAttribute("data-pressing", "true")
+    }
+  }
+
+  function handleKeyUp(e: React.KeyboardEvent<HTMLButtonElement>) {
+    onKeyUp?.(e)
+    e.currentTarget.removeAttribute("data-pressing")
+  }
+
+  function handleBlur(e: React.FocusEvent<HTMLButtonElement>) {
+    onBlur?.(e)
+    e.currentTarget.removeAttribute("data-pressing")
+  }
+
   return (
     <Comp
       data-slot="button"
@@ -129,6 +152,9 @@ function Button({
       aria-busy={loading || undefined}
       disabled={disabled || loading}
       className={cn(buttonVariants({ variant, size, shape, className }))}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
+      onBlur={handleBlur}
       {...props}
     >
       {loading ? (

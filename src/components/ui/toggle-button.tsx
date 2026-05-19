@@ -20,9 +20,9 @@ export interface ToggleButtonProps
  * Inactive: icon + subtle outline border
  * Active:   icon + label + brand purple fill
  *
- * Uses `--transition-fast` (120ms ease-out) for color/border and
- * `--duration-normal` (180ms ease-out) for the width expansion so the
- * reveal feels deliberate without being slow.
+ * Uses `--transition-fast` for color/border and `--duration-normal` for the
+ * width expansion so the reveal feels deliberate without being slow.
+ * Opacity fades on `--duration-fast` (staggered to trail the grid animation).
  *
  * @example
  * const [active, setActive] = React.useState(false)
@@ -85,8 +85,8 @@ function ToggleButton({
           gridTemplateColumns: active ? "1fr" : "0fr",
           marginInlineStart: active ? "0.25rem" : "0",
           transition: [
-            `grid-template-columns 160ms var(--ease-out)`,
-            `margin-inline-start 160ms var(--ease-out)`,
+            `grid-template-columns var(--duration-normal) var(--ease-out)`,
+            `margin-inline-start var(--duration-normal) var(--ease-out)`,
           ].join(", "),
         }}
       >
@@ -96,8 +96,8 @@ function ToggleButton({
           style={{
             opacity: active ? 1 : 0,
             transition: active
-              ? `opacity 80ms var(--ease-out) 80ms`
-              : `opacity 80ms var(--ease-out)`,
+              ? `opacity var(--duration-fast) var(--ease-out) var(--duration-fast)`
+              : `opacity var(--duration-fast) var(--ease-out)`,
           }}
         >
           {children}

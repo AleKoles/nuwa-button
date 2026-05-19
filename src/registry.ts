@@ -65,6 +65,30 @@ export const registry: Record<string, ComponentEntry> = {
     relatedTo: ['Input', 'Badge'],
   },
 
+  ToggleButton: {
+    from: '@ds/ui',
+    exports: ['ToggleButton'],
+    description: 'Expand/collapse button that collapses to icon-only when inactive and reveals a label when active. Uses a CSS grid 0fr→1fr transition for content-exact symmetric width animation.',
+    variants: {
+      active: {
+        false: 'Collapsed — icon only, subtle border, transparent background.',
+        true:  'Expanded — icon + label, brand purple fill.',
+      },
+    },
+    useCases: [
+      'Tab groups where only the selected tab shows its label',
+      'Sidebar panel toggles (Chat, Docs, Outline)',
+      'Toolbar mode switches that need to show which mode is active',
+      'Mutually exclusive view selectors',
+    ],
+    avoid: [
+      'Standalone toggle switches — use a checkbox or Switch primitive instead',
+      'Non-exclusive multi-select — use checkboxes',
+      'When all options should always show their labels — use Button or Tabs',
+    ],
+    relatedTo: ['Button'],
+  },
+
   Input: {
     from: '@ds/ui',
     exports: ['Input', 'inputVariants'],
