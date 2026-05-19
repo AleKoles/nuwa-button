@@ -219,12 +219,15 @@ function DocumentViewLayout() {
                 <p className="text-[10px] text-muted-foreground">Enterprise</p>
               </div>
             </div>
-            <button
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              shape="round"
               aria-label="Help"
-              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted/70"
+              className="bg-muted text-muted-foreground hover:bg-muted/70"
             >
               ?
-            </button>
+            </Button>
           </div>
         </aside>
 
