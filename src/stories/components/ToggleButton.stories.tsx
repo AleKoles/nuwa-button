@@ -13,16 +13,7 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div
-        style={{
-          background: 'var(--background)',
-          minHeight: '100vh',
-          padding: '2rem',
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-        }}
-      >
+      <div className="bg-background p-8 flex justify-center">
         <Story />
       </div>
     ),

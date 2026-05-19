@@ -53,9 +53,9 @@ function ToggleButton({
       aria-pressed={active}
       onClick={handleClick}
       className={cn(
-        // Layout
-        "inline-flex h-8 shrink-0 items-center justify-start rounded-md border px-2",
-        "cursor-pointer select-none text-sm font-medium outline-none",
+        // Layout — matches size="sm" button: h-7, text-[0.8rem]
+        "inline-flex h-7 shrink-0 items-center justify-start rounded-md border px-2",
+        "cursor-pointer select-none text-[0.8rem] font-medium outline-none",
         // Subtle press — half the normal button press
         "active:translate-y-[0.5px]",
         // Color + border transition (fast — 120ms)
@@ -70,8 +70,8 @@ function ToggleButton({
       )}
       {...props}
     >
-      {/* Icon — always visible, fixed square */}
-      <span className="flex size-4 shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+      {/* Icon — always visible, fixed square — size-3.5 matches sm button icon */}
+      <span className="flex size-3.5 shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:size-3.5 [&_svg]:shrink-0">
         {icon}
       </span>
 
@@ -83,7 +83,7 @@ function ToggleButton({
         className="grid overflow-hidden"
         style={{
           gridTemplateColumns: active ? "1fr" : "0fr",
-          marginInlineStart: active ? "0.375rem" : "0",
+          marginInlineStart: active ? "0.25rem" : "0",
           transition: [
             `grid-template-columns 160ms var(--ease-out)`,
             `margin-inline-start 160ms var(--ease-out)`,

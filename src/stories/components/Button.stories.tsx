@@ -42,16 +42,7 @@ const meta = {
   // show the correct background in both light and dark mode.
   decorators: [
     (Story) => (
-      <div
-        style={{
-          background: 'var(--background)',
-          minHeight: '100vh',
-          padding: '2rem',
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-        }}
-      >
+      <div className="bg-background p-8 flex justify-center">
         <Story />
       </div>
     ),
@@ -65,6 +56,10 @@ const meta = {
       control: 'select',
       options: ['xs', 'sm', 'default', 'lg', 'icon', 'icon-xs', 'icon-sm', 'icon-lg'],
     },
+    shape: {
+      control: 'inline-radio',
+      options: ['square', 'round'],
+    },
     disabled: { control: 'boolean' },
     loading: { control: 'boolean' },
     children: { control: 'text' },
@@ -75,6 +70,7 @@ const meta = {
     children: 'Button',
     variant: 'default',
     size: 'default',
+    shape: 'square',
     disabled: false,
     loading: false,
   },
@@ -228,6 +224,53 @@ export const WithIcons: Story = {
       <Button variant="ghost"><Send /> Send</Button>
       <Button size="icon" aria-label="Add"><Plus /></Button>
       <Button size="icon" variant="ghost" aria-label="Settings"><Settings /></Button>
+    </div>
+  ),
+}
+
+// ─── Shape ───────────────────────────────────────────────────────────────────
+
+export const Shape: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div className="space-y-6">
+      <div>
+        <p className="mb-3 font-mono text-xs text-muted-foreground">Square (default — rounded-md)</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button variant="default">Continue</Button>
+          <Button variant="accent">Upgrade</Button>
+          <Button variant="outline">Cancel</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost"><Send /> Send</Button>
+          <Button size="icon" aria-label="Add"><Plus /></Button>
+          <Button size="icon-sm" variant="ghost" aria-label="Settings"><Settings /></Button>
+        </div>
+      </div>
+      <div>
+        <p className="mb-3 font-mono text-xs text-muted-foreground">Round (rounded-full)</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button variant="default" shape="round">Continue</Button>
+          <Button variant="accent" shape="round">Upgrade</Button>
+          <Button variant="outline" shape="round">Cancel</Button>
+          <Button variant="secondary" shape="round">Secondary</Button>
+          <Button variant="ghost" shape="round"><Send /> Send</Button>
+          <Button size="icon" shape="round" aria-label="Add"><Plus /></Button>
+          <Button size="icon-sm" variant="ghost" shape="round" aria-label="Settings"><Settings /></Button>
+        </div>
+      </div>
+      <div>
+        <p className="mb-3 font-mono text-xs text-muted-foreground">Round — all sizes</p>
+        <div className="flex flex-wrap items-end gap-3">
+          <Button size="xs" shape="round">Extra small</Button>
+          <Button size="sm" shape="round">Small</Button>
+          <Button size="default" shape="round">Default</Button>
+          <Button size="lg" shape="round">Large</Button>
+          <Button size="icon-xs" shape="round" aria-label="Add xs"><Plus /></Button>
+          <Button size="icon-sm" shape="round" aria-label="Add sm"><Plus /></Button>
+          <Button size="icon" shape="round" aria-label="Add"><Plus /></Button>
+          <Button size="icon-lg" shape="round" aria-label="Add lg"><Plus /></Button>
+        </div>
+      </div>
     </div>
   ),
 }

@@ -117,6 +117,9 @@ function DocumentViewLayout() {
             Project Proposal — Digital Transformation Initiative
           </span>
           <div className="ml-2 flex shrink-0 items-center gap-1">
+            <Button variant="ghost" size="icon-sm" aria-label="Toggle panel">
+              <PanelLeft />
+            </Button>
             <ToggleButton
               icon={<MessageSquare />}
               active={activeTab === 'chat'}
@@ -260,15 +263,15 @@ function DocumentViewLayout() {
         </main>
 
         {/* ── Right panel — document viewer ────────────────────────────────── */}
-        <aside className="relative flex w-[42%] min-w-[420px] shrink-0 flex-col bg-card">
+        <aside className="relative flex w-[42%] min-w-[420px] shrink-0 flex-col border-l border-border bg-card">
 
-          <div className="p-8 pb-4">
+          <div className="px-6 pb-3 pt-5">
             <Avatar initials="SW" bg="#D6B16D" />
           </div>
 
           {/* Document card */}
-          <div className="flex-1 px-8 pb-8">
-            <div className="h-full rounded-xl border border-border/50 bg-[var(--surface-subtle)]" />
+          <div className="flex-1 px-6 pb-6">
+            <div className="h-full rounded-xl bg-background shadow-sm" />
           </div>
 
           {/* Pager pill */}

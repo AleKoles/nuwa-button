@@ -6,7 +6,7 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap [transition:var(--transition-fast)] outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-[0.5px] disabled:pointer-events-none disabled:opacity-50 data-[loading=true]:opacity-100 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap [transition:var(--transition-fast)] outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-[0.5px] disabled:pointer-events-none disabled:opacity-50 data-[loading=true]:opacity-100 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -50,10 +50,25 @@ const buttonVariants = cva(
         /** 36×36px square — icon-only, prominent. */
         "icon-lg": "size-9",
       },
+      shape: {
+        /** Default — 8px radius, matches the system rounded-md scale. */
+        square: "rounded-md",
+        /** Pill — fully rounded corners. Use for floating actions, tags, or a softer visual language. */
+        round: "rounded-full",
+      },
     },
+    compoundVariants: [
+      // xs / icon-xs use rounded-[min(var(--radius-md),10px)] — override for pill shape
+      { shape: "round", size: "xs",      class: "rounded-full" },
+      { shape: "round", size: "icon-xs", class: "rounded-full" },
+      // sm / icon-sm use rounded-[min(var(--radius-md),12px)] — override for pill shape
+      { shape: "round", size: "sm",      class: "rounded-full" },
+      { shape: "round", size: "icon-sm", class: "rounded-full" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
+      shape: "square",
     },
   }
 )
@@ -74,6 +89,10 @@ const ICON_SIZES = new Set(["icon", "icon-xs", "icon-sm", "icon-lg"])
  * <Button loading>Save changes</Button>
  * <Button size="icon" loading aria-label="Saving" />
  *
+ * // Pill shape — fully rounded corners
+ * <Button shape="round">Send</Button>
+ * <Button shape="round" size="icon" aria-label="Add"><Plus /></Button>
+ *
  * // Icon-only (always include aria-label)
  * <Button size="icon" aria-label="Add item"><Plus /></Button>
  *
@@ -84,6 +103,7 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  shape = "square",
   asChild = false,
   loading = false,
   disabled,
@@ -104,10 +124,11 @@ function Button({
       data-slot="button"
       data-variant={variant}
       data-size={size}
+      data-shape={shape}
       data-loading={loading || undefined}
       aria-busy={loading || undefined}
       disabled={disabled || loading}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, shape, className }))}
       {...props}
     >
       {loading ? (
