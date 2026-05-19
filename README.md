@@ -2,7 +2,7 @@
 
 A token-driven component library and documentation system built with React 19, TypeScript, Tailwind CSS v4, shadcn/ui, and Storybook 10.
 
-Used to createw a reusable button component.
+Used to create a reusable button component.
 
 ---
 
@@ -39,7 +39,10 @@ src/
 │   ├── foundations/    # Token documentation (colors, type, spacing, etc.)
 │   └── components/     # Component stories
 ├── tokens/
-│   └── index.css       # Single source of truth for all design tokens
+│   └── index.css       # Single source of truth for all design
+├── layouts/
+│   └── DocumentView.stories.tsx       # Raw page mockup with buttons (lg screens only)
+ tokens
 ├── lib/
 │   └── utils.ts        # cn() utility
 └── index.css           # Tailwind entry + @theme bridge
