@@ -163,13 +163,15 @@ function DocumentViewLayout() {
         <aside className="flex shrink-0 flex-col overflow-y-auto border-r border-border bg-background" style={{ width: 'var(--sidebar-width)' }}>
           <nav className="flex flex-col gap-px px-2 pt-3">
             {NAV_ITEMS.map(({ icon: Icon, label }) => (
-              <button
+              <Button
                 key={label}
-                className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-[7px] text-left text-sm text-foreground transition-colors hover:bg-muted"
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start gap-2.5 text-foreground"
               >
-                <Icon size={15} className="shrink-0 text-muted-foreground" />
+                <Icon className="shrink-0 text-muted-foreground" />
                 {label}
-              </button>
+              </Button>
             ))}
           </nav>
 

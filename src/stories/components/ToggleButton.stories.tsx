@@ -78,7 +78,7 @@ export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <p className="mb-2 font-mono text-xs text-muted-foreground">Inactive (icon only)</p>
+        <p className="mb-2 font-mono text-xs text-foreground/70">Inactive (icon only)</p>
         <div className="flex items-center gap-2">
           <ToggleButton icon={<MessageSquare />} active={false}>Chat</ToggleButton>
           <ToggleButton icon={<BookOpen />} active={false}>Docs</ToggleButton>
@@ -88,7 +88,7 @@ export const States: Story = {
         </div>
       </div>
       <div>
-        <p className="mb-2 font-mono text-xs text-muted-foreground">Active (icon + label)</p>
+        <p className="mb-2 font-mono text-xs text-foreground/70">Active (icon + label)</p>
         <div className="flex items-center gap-2">
           <ToggleButton icon={<MessageSquare />} active>Chat</ToggleButton>
           <ToggleButton icon={<BookOpen />} active>Docs</ToggleButton>

@@ -70,16 +70,16 @@ function ToggleButton({
       )}
       {...props}
     >
-      {/* Icon — always visible, fixed square — size-3.5 matches sm button icon */}
-      <span className="flex size-3.5 shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:size-3.5 [&_svg]:shrink-0">
+      {/* Icon — decorative; label text is the accessible name */}
+      <span aria-hidden="true" className="flex size-3.5 shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:size-3.5 [&_svg]:shrink-0">
         {icon}
       </span>
 
       {/* Label — grid 0fr→1fr is content-exact and perfectly symmetric:
            when one button collapses (1fr→0fr) at the same rate another
-           expands (0fr→1fr), total group width stays constant. */}
+           expands (0fr→1fr), total group width stays constant.
+           NOT aria-hidden so the text always provides the accessible name. */}
       <span
-        aria-hidden={!active}
         className="grid overflow-hidden"
         style={{
           gridTemplateColumns: active ? "1fr" : "0fr",

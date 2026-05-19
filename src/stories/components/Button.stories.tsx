@@ -152,7 +152,7 @@ export const WhenToUse: Story = {
   parameters: { controls: { disable: true } },
   render: () => (
     <div className="w-full max-w-2xl">
-      <p className="mb-4 text-xs text-muted-foreground">
+      <p className="mb-4 text-xs text-foreground/70">
         Each variant has one semantic role. Using the wrong one breaks visual hierarchy.
       </p>
       <div className="divide-y divide-border rounded-lg border border-border overflow-hidden">
@@ -208,10 +208,10 @@ export const WhenToUse: Story = {
           },
         ] as const).map(({ variant, token, rule, examples, el }) => (
           <div key={variant} className="grid grid-cols-[5.5rem_1fr_auto] items-center gap-4 bg-background px-4 py-3 hover:bg-muted/50">
-            <span className="font-mono text-xs text-muted-foreground">{variant}</span>
+            <span className="font-mono text-xs text-foreground/70">{variant}</span>
             <div>
               <p className="text-xs font-medium text-foreground">{rule}</p>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">{examples} · <span className="font-mono">{token}</span></p>
+              <p className="mt-0.5 text-xs text-foreground/70">{examples} · <span className="font-mono">{token}</span></p>
             </div>
             {el}
           </div>
@@ -228,7 +228,7 @@ export const Variants: Story = {
   render: () => (
     <div className="space-y-6">
       <div>
-        <p className="mb-2 font-mono text-xs text-muted-foreground">Normal</p>
+        <p className="mb-2 font-mono text-xs text-foreground/70">Normal</p>
         <div className="flex flex-wrap items-center gap-3">
           <Button variant="default">Default</Button>
           <Button variant="accent">Accent</Button>
@@ -241,7 +241,7 @@ export const Variants: Story = {
       </div>
 
       <div>
-        <p className="mb-2 font-mono text-xs text-muted-foreground">Disabled</p>
+        <p className="mb-2 font-mono text-xs text-foreground/70">Disabled</p>
         <div className="flex flex-wrap items-center gap-3">
           <Button variant="default" disabled>Default</Button>
           <Button variant="accent" disabled>Accent</Button>
@@ -254,7 +254,7 @@ export const Variants: Story = {
       </div>
 
       <div>
-        <p className="mb-2 font-mono text-xs text-muted-foreground">Icon only</p>
+        <p className="mb-2 font-mono text-xs text-foreground/70">Icon only</p>
         <div className="flex flex-wrap items-center gap-3">
           <Button size="icon" variant="default" aria-label="Add"><Plus /></Button>
           <Button size="icon" variant="accent" aria-label="Add"><Plus /></Button>
@@ -275,7 +275,7 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-6">
       <div>
-        <p className="mb-3 font-mono text-xs text-muted-foreground">Text buttons</p>
+        <p className="mb-3 font-mono text-xs text-foreground/70">Text buttons</p>
         <div className="flex flex-wrap items-end gap-3">
           <Button size="xs">Extra small</Button>
           <Button size="sm">Small</Button>
@@ -284,7 +284,7 @@ export const Sizes: Story = {
         </div>
       </div>
       <div>
-        <p className="mb-3 font-mono text-xs text-muted-foreground">Icon buttons</p>
+        <p className="mb-3 font-mono text-xs text-foreground/70">Icon buttons</p>
         <div className="flex flex-wrap items-end gap-3">
           <Button size="icon-xs" aria-label="Add xs"><Plus /></Button>
           <Button size="icon-sm" aria-label="Add sm"><Plus /></Button>
@@ -321,7 +321,7 @@ export const Shape: Story = {
   render: () => (
     <div className="space-y-6">
       <div>
-        <p className="mb-3 font-mono text-xs text-muted-foreground">Square (default — rounded-md)</p>
+        <p className="mb-3 font-mono text-xs text-foreground/70">Square (default — rounded-md)</p>
         <div className="flex flex-wrap items-center gap-3">
           <Button variant="default">Continue</Button>
           <Button variant="accent">Upgrade</Button>
@@ -333,7 +333,7 @@ export const Shape: Story = {
         </div>
       </div>
       <div>
-        <p className="mb-3 font-mono text-xs text-muted-foreground">Round (rounded-full)</p>
+        <p className="mb-3 font-mono text-xs text-foreground/70">Round (rounded-full)</p>
         <div className="flex flex-wrap items-center gap-3">
           <Button variant="default" shape="round">Continue</Button>
           <Button variant="accent" shape="round">Upgrade</Button>
@@ -345,7 +345,7 @@ export const Shape: Story = {
         </div>
       </div>
       <div>
-        <p className="mb-3 font-mono text-xs text-muted-foreground">Round — all sizes</p>
+        <p className="mb-3 font-mono text-xs text-foreground/70">Round — all sizes</p>
         <div className="flex flex-wrap items-end gap-3">
           <Button size="xs" shape="round">Extra small</Button>
           <Button size="sm" shape="round">Small</Button>
@@ -368,7 +368,7 @@ export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <p className="mb-2 font-mono text-xs text-muted-foreground">Normal / Disabled / Invalid / Loading</p>
+        <p className="mb-2 font-mono text-xs text-foreground/70">Normal / Disabled / Invalid / Loading</p>
         {(['default', 'accent', 'outline', 'destructive'] as const).map((variant) => (
           <div key={variant} className="mb-2 flex flex-wrap items-center gap-3">
             <Button variant={variant}>Normal</Button>
@@ -379,7 +379,7 @@ export const States: Story = {
         ))}
       </div>
       <div>
-        <p className="mb-2 font-mono text-xs text-muted-foreground">Loading — icon-only</p>
+        <p className="mb-2 font-mono text-xs text-foreground/70">Loading — icon-only</p>
         <div className="flex flex-wrap items-center gap-3">
           <Button size="icon-xs" loading aria-label="Loading" />
           <Button size="icon-sm" loading aria-label="Loading" />
