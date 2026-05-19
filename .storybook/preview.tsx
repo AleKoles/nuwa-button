@@ -49,6 +49,7 @@ const preview: Preview = {
   decorators: [withTheme],
 
   parameters: {
+    layout: 'fullscreen',
     options: {
       storySort: {
         order: ['Foundations', 'Components'],

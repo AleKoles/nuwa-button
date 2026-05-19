@@ -494,8 +494,8 @@
        NEW — Layout sizing
        ================================= */
   
-    --sidebar-width: 300px;
-    --topbar-height: 56px;
+    --sidebar-width:  260px;
+    --topbar-height:  44px;
     --composer-width: 520px;
   }
   

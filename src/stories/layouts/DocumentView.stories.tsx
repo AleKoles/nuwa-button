@@ -92,7 +92,7 @@ function DocumentViewLayout() {
     <div className="flex flex-col overflow-hidden bg-background text-foreground antialiased" style={{ height: '100vh' }}>
 
       {/* ── Topbar ─────────────────────────────────────────────────────────── */}
-      <header className="flex h-11 shrink-0 items-center gap-1 border-b border-border bg-background px-3">
+      <header className="flex shrink-0 items-center gap-1 border-b border-border bg-background px-3" style={{ height: 'var(--topbar-height)' }}>
 
         {/* Brand */}
         <div className="flex items-center gap-0.5">
@@ -157,7 +157,7 @@ function DocumentViewLayout() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* ── Sidebar ──────────────────────────────────────────────────────── */}
-        <aside className="flex w-[260px] shrink-0 flex-col overflow-y-auto border-r border-border bg-background">
+        <aside className="flex shrink-0 flex-col overflow-y-auto border-r border-border bg-background" style={{ width: 'var(--sidebar-width)' }}>
           <nav className="flex flex-col gap-px px-2 pt-3">
             {NAV_ITEMS.map(({ icon: Icon, label }) => (
               <button

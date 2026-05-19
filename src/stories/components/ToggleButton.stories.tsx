@@ -16,10 +16,10 @@ const meta = {
       <div
         style={{
           background: 'var(--background)',
-          padding: '1.5rem',
-          borderRadius: '0.5rem',
+          minHeight: '100vh',
+          padding: '2rem',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'center',
         }}
       >
@@ -39,7 +39,7 @@ const meta = {
     icon: <MessageSquare />,
     onToggle: fn(),
   },
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof ToggleButton>
 
 export default meta
