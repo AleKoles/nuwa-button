@@ -75,33 +75,33 @@ function ToggleButton({
         {icon}
       </span>
 
-      {/* Label — width opens first (invisible), then text fades in.
-           Collapse reverses: text fades out first, then width closes. */}
+      {/* Label — grid 0fr→1fr is content-exact and perfectly symmetric:
+           when one button collapses (1fr→0fr) at the same rate another
+           expands (0fr→1fr), total group width stays constant. */}
       <span
         aria-hidden={!active}
-        className="overflow-hidden whitespace-nowrap"
+        className="grid overflow-hidden"
         style={{
-          maxWidth: active ? "10rem" : "0",
+          gridTemplateColumns: active ? "1fr" : "0fr",
           marginInlineStart: active ? "0.375rem" : "0",
-          opacity: active ? 1 : 0,
-          transition: active
-            ? [
-                // Expand: width + gap open immediately
-                `max-width var(--duration-normal) var(--ease-out)`,
-                `margin-inline-start var(--duration-normal) var(--ease-out)`,
-                // Text fades in after the space is mostly open (80ms delay)
-                `opacity 80ms var(--ease-out) 80ms`,
-              ].join(", ")
-            : [
-                // Collapse: text fades out first (80ms)
-                `opacity 80ms var(--ease-out)`,
-                // Then width + gap close
-                `max-width var(--duration-normal) var(--ease-out) 60ms`,
-                `margin-inline-start var(--duration-normal) var(--ease-out) 60ms`,
-              ].join(", "),
+          transition: [
+            `grid-template-columns 160ms var(--ease-out)`,
+            `margin-inline-start 160ms var(--ease-out)`,
+          ].join(", "),
         }}
       >
-        {children}
+        {/* Inner span defines the content width the grid column grows to */}
+        <span
+          className="overflow-hidden whitespace-nowrap"
+          style={{
+            opacity: active ? 1 : 0,
+            transition: active
+              ? `opacity 80ms var(--ease-out) 80ms`
+              : `opacity 80ms var(--ease-out)`,
+          }}
+        >
+          {children}
+        </span>
       </span>
     </button>
   )

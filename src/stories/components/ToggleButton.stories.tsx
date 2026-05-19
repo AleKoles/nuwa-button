@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { fn } from 'storybook/test'
 import { AlignJustify, BookOpen, Bot, MessageSquare, PanelLeft, Search } from 'lucide-react'
 
