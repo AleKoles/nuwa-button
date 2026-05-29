@@ -25,9 +25,21 @@ body {
 /* =========================================
    TAILWIND v4 APPLICATION THEME OVERRIDES
    ========================================= */
+@keyframes button-shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-4px); }
+  30%       { transform: translateX(4px); }
+  45%       { transform: translateX(-3px); }
+  60%       { transform: translateX(3px); }
+  75%       { transform: translateX(-1px); }
+}
+
 @theme {
   /* 2. Map Tailwind's default sans to Figtree */
   --font-sans: 'Figtree Variable', sans-serif;
+
+  /* Button shake feedback animation */
+  --animate-button-shake: button-shake 0.45s ease-in-out;
   --font-heading: var(--font-sans);
 
   /* 3. Non-brand specific tokens unique to shadcn components */

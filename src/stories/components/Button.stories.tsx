@@ -4,7 +4,6 @@ import { fn } from 'storybook/test'
 import {
   ArrowRight,
   Check,
-  ChevronDown,
   Plus,
   Save,
   Search,
@@ -28,7 +27,6 @@ const ICON_MAP = {
   Save,
   Send,
   Settings,
-  ChevronDown,
 } as const
 
 type IconName = keyof typeof ICON_MAP
@@ -44,8 +42,6 @@ const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
-  // Wraps every story canvas in a bg-background box so docs canvases
-  // show the correct background in both light and dark mode.
   decorators: [
     (Story) => (
       <div className="bg-background p-8 flex justify-center">
@@ -56,36 +52,46 @@ const meta = {
   argTypes: {
     variant: {
       description:
-        'Controls visual weight and semantic role. Use **default** for the one primary action per view, **accent** for brand/feature context, **outline** for secondary alongside default, **ghost** for toolbar/icon actions.',
+        'Semantic role and visual weight. **action** = one primary CTA per surface. **primary** = brand/feature context. **outline** = secondary alongside action. **ghost** = toolbar/icon actions.',
       control: 'select',
-      options: ['default', 'accent', 'outline', 'secondary', 'ghost', 'destructive', 'link'],
+      options: ['action', 'primary', 'outline', 'soft', 'ghost', 'destructive', 'link'],
     },
     size: {
       description: 'Height and padding scale. `icon-*` sizes are square — always add `aria-label`.',
       control: 'select',
-      options: ['xs', 'sm', 'default', 'lg', 'icon', 'icon-xs', 'icon-sm', 'icon-lg'],
+      options: ['xs', 'sm', 'md', 'lg', 'icon', 'icon-xs', 'icon-sm', 'icon-lg'],
     },
     shape: {
-      description: '`square` = 8 px radius (default). `round` = pill — use for floating actions or a softer visual register.',
+      description: '`square` = 8 px radius (default). `round` = pill.',
       control: 'inline-radio',
       options: ['square', 'round'],
     },
-    disabled: { control: 'boolean' },
     loading: {
       description: 'Shows a spinner and blocks interaction. Text buttons show "Loading…"; icon-only sizes show the spinner alone.',
       control: 'boolean',
     },
+    status: {
+      description: 'Async feedback state. Parent controls reset by setting back to undefined.',
+      control: 'select',
+      options: [undefined, 'success', 'error'],
+    },
+    fullWidth: {
+      description: 'Stretch to fill container width.',
+      control: 'boolean',
+    },
+    disabled: { control: 'boolean' },
     children: { control: 'text' },
     asChild: { table: { disable: true } },
   },
   args: {
     onClick: fn(),
     children: 'Button',
-    variant: 'default',
-    size: 'default',
+    variant: 'action',
+    size: 'md',
     shape: 'square',
     disabled: false,
     loading: false,
+    fullWidth: false,
   },
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Button>
@@ -93,7 +99,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// ─── Playground — fully interactive via controls panel ───────────────────────
+// ─── Playground ───────────────────────────────────────────────────────────────
 
 export const Playground: Story = {
   argTypes: {
@@ -116,7 +122,6 @@ export const Playground: Story = {
     const IconComp = ICON_MAP[iconName as IconName] ?? Plus
 
     if (iconPosition === 'icon-only') {
-      // Force a square icon size regardless of what the size control says
       const iconSize =
         buttonProps.size === 'xs' || buttonProps.size === 'icon-xs' ? 'icon-xs'
         : buttonProps.size === 'sm' || buttonProps.size === 'icon-sm' ? 'icon-sm'
@@ -128,7 +133,6 @@ export const Playground: Story = {
           {...buttonProps}
           size={iconSize}
         >
-          {/* children replaced by spinner when loading=true */}
           <IconComp />
         </Button>
       )
@@ -136,7 +140,6 @@ export const Playground: Story = {
 
     return (
       <Button {...buttonProps}>
-        {/* icons replaced by spinner + "Loading…" when loading=true */}
         {iconPosition === 'before' && <IconComp />}
         {children}
         {iconPosition === 'after' && <IconComp />}
@@ -158,32 +161,32 @@ export const WhenToUse: Story = {
       <div className="divide-y divide-border rounded-lg border border-border overflow-hidden">
         {([
           {
-            variant: 'default' as const,
+            variant: 'action' as const,
             token: '--action',
-            rule: 'One primary decision per view',
+            rule: 'One primary decision per view — never two',
             examples: 'Continue, Submit, Save',
             el: <Button size="sm">Continue</Button>,
           },
           {
-            variant: 'accent' as const,
+            variant: 'primary' as const,
             token: '--primary',
             rule: 'Brand context — upgrades, active feature toggles',
             examples: 'Upgrade, Activate, Try it',
-            el: <Button variant="accent" size="sm">Upgrade</Button>,
+            el: <Button variant="primary" size="sm">Upgrade</Button>,
           },
           {
             variant: 'outline' as const,
             token: '--border',
-            rule: 'Secondary alongside default — never looks disabled',
+            rule: 'Secondary alongside action — never looks disabled',
             examples: 'Cancel, Export, Duplicate',
             el: <Button variant="outline" size="sm">Cancel</Button>,
           },
           {
-            variant: 'secondary' as const,
+            variant: 'soft' as const,
             token: '--secondary',
-            rule: 'Tertiary brand-tinted — filters, tags, contextual',
+            rule: 'Between outline and ghost — filters, chips, contextual',
             examples: 'Filter, Label, Assign',
-            el: <Button variant="secondary" size="sm">Filter</Button>,
+            el: <Button variant="soft" size="sm">Filter</Button>,
           },
           {
             variant: 'ghost' as const,
@@ -195,7 +198,7 @@ export const WhenToUse: Story = {
           {
             variant: 'destructive' as const,
             token: '--destructive',
-            rule: 'Irreversible actions — always pair with confirmation',
+            rule: 'Irreversible actions — always pair with a confirmation step',
             examples: 'Delete, Remove, Revoke',
             el: <Button variant="destructive" size="sm"><Trash2 /> Delete</Button>,
           },
@@ -230,10 +233,10 @@ export const Variants: Story = {
       <div>
         <p className="mb-2 font-mono text-xs text-foreground/70">Normal</p>
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="default">Default</Button>
-          <Button variant="accent">Accent</Button>
+          <Button variant="action">Action</Button>
+          <Button variant="primary">Primary</Button>
           <Button variant="outline">Outline</Button>
-          <Button variant="secondary">Secondary</Button>
+          <Button variant="soft">Soft</Button>
           <Button variant="ghost">Ghost</Button>
           <Button variant="destructive">Destructive</Button>
           <Button variant="link">Link</Button>
@@ -243,10 +246,10 @@ export const Variants: Story = {
       <div>
         <p className="mb-2 font-mono text-xs text-foreground/70">Disabled</p>
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="default" disabled>Default</Button>
-          <Button variant="accent" disabled>Accent</Button>
+          <Button variant="action" disabled>Action</Button>
+          <Button variant="primary" disabled>Primary</Button>
           <Button variant="outline" disabled>Outline</Button>
-          <Button variant="secondary" disabled>Secondary</Button>
+          <Button variant="soft" disabled>Soft</Button>
           <Button variant="ghost" disabled>Ghost</Button>
           <Button variant="destructive" disabled>Destructive</Button>
           <Button variant="link" disabled>Link</Button>
@@ -256,10 +259,10 @@ export const Variants: Story = {
       <div>
         <p className="mb-2 font-mono text-xs text-foreground/70">Icon only</p>
         <div className="flex flex-wrap items-center gap-3">
-          <Button size="icon" variant="default" aria-label="Add"><Plus /></Button>
-          <Button size="icon" variant="accent" aria-label="Add"><Plus /></Button>
+          <Button size="icon" variant="action" aria-label="Add"><Plus /></Button>
+          <Button size="icon" variant="primary" aria-label="Add"><Plus /></Button>
           <Button size="icon" variant="outline" aria-label="Add"><Plus /></Button>
-          <Button size="icon" variant="secondary" aria-label="Add"><Plus /></Button>
+          <Button size="icon" variant="soft" aria-label="Add"><Plus /></Button>
           <Button size="icon" variant="ghost" aria-label="Settings"><Settings /></Button>
           <Button size="icon" variant="destructive" aria-label="Delete"><Trash2 /></Button>
         </div>
@@ -279,7 +282,7 @@ export const Sizes: Story = {
         <div className="flex flex-wrap items-end gap-3">
           <Button size="xs">Extra small</Button>
           <Button size="sm">Small</Button>
-          <Button size="default">Default</Button>
+          <Button size="md">Medium (default)</Button>
           <Button size="lg">Large</Button>
         </div>
       </div>
@@ -306,7 +309,7 @@ export const WithIcons: Story = {
       <Button>Continue <ArrowRight /></Button>
       <Button variant="outline"><Plus /> New item</Button>
       <Button variant="destructive"><Trash2 /> Delete</Button>
-      <Button variant="secondary" size="sm"><Plus /> Add</Button>
+      <Button variant="soft" size="sm"><Plus /> Add</Button>
       <Button variant="ghost"><Send /> Send</Button>
       <Button size="icon" aria-label="Add"><Plus /></Button>
       <Button size="icon" variant="ghost" aria-label="Settings"><Settings /></Button>
@@ -323,10 +326,10 @@ export const Shape: Story = {
       <div>
         <p className="mb-3 font-mono text-xs text-foreground/70">Square (default — rounded-md)</p>
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="default">Continue</Button>
-          <Button variant="accent">Upgrade</Button>
+          <Button variant="action">Continue</Button>
+          <Button variant="primary">Upgrade</Button>
           <Button variant="outline">Cancel</Button>
-          <Button variant="secondary">Secondary</Button>
+          <Button variant="soft">Soft</Button>
           <Button variant="ghost"><Send /> Send</Button>
           <Button size="icon" aria-label="Add"><Plus /></Button>
           <Button size="icon-sm" variant="ghost" aria-label="Settings"><Settings /></Button>
@@ -335,10 +338,10 @@ export const Shape: Story = {
       <div>
         <p className="mb-3 font-mono text-xs text-foreground/70">Round (rounded-full)</p>
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="default" shape="round">Continue</Button>
-          <Button variant="accent" shape="round">Upgrade</Button>
+          <Button variant="action" shape="round">Continue</Button>
+          <Button variant="primary" shape="round">Upgrade</Button>
           <Button variant="outline" shape="round">Cancel</Button>
-          <Button variant="secondary" shape="round">Secondary</Button>
+          <Button variant="soft" shape="round">Soft</Button>
           <Button variant="ghost" shape="round"><Send /> Send</Button>
           <Button size="icon" shape="round" aria-label="Add"><Plus /></Button>
           <Button size="icon-sm" variant="ghost" shape="round" aria-label="Settings"><Settings /></Button>
@@ -349,7 +352,7 @@ export const Shape: Story = {
         <div className="flex flex-wrap items-end gap-3">
           <Button size="xs" shape="round">Extra small</Button>
           <Button size="sm" shape="round">Small</Button>
-          <Button size="default" shape="round">Default</Button>
+          <Button size="md" shape="round">Medium</Button>
           <Button size="lg" shape="round">Large</Button>
           <Button size="icon-xs" shape="round" aria-label="Add xs"><Plus /></Button>
           <Button size="icon-sm" shape="round" aria-label="Add sm"><Plus /></Button>
@@ -366,30 +369,82 @@ export const Shape: Story = {
 export const States: Story = {
   parameters: { controls: { disable: true } },
   render: () => (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div>
-        <p className="mb-2 font-mono text-xs text-foreground/70">Normal / Disabled / Invalid / Loading</p>
-        {(['default', 'accent', 'outline', 'destructive'] as const).map((variant) => (
-          <div key={variant} className="mb-2 flex flex-wrap items-center gap-3">
-            <Button variant={variant}>Normal</Button>
-            <Button variant={variant} disabled>Disabled</Button>
-            <Button variant={variant} aria-invalid="true">Invalid</Button>
-            <Button variant={variant} loading>Save changes</Button>
+        <div className="mb-3 grid grid-cols-[6rem_1fr_1fr_1fr_1fr] gap-3 text-[10px] font-medium uppercase tracking-wide text-foreground/40">
+          <span />
+          <span>Normal</span>
+          <span>Disabled</span>
+          <span>Invalid</span>
+          <span>Loading</span>
+        </div>
+        {([
+          'action', 'primary', 'outline', 'soft', 'ghost', 'destructive',
+        ] as const).map((variant) => (
+          <div key={variant} className="grid grid-cols-[6rem_1fr_1fr_1fr_1fr] items-center gap-3 py-1">
+            <span className="font-mono text-xs text-foreground/50">{variant}</span>
+            <Button variant={variant}>Action</Button>
+            <Button variant={variant} disabled>Action</Button>
+            <Button variant={variant} aria-invalid="true">Action</Button>
+            <Button variant={variant} loading>Action</Button>
           </div>
         ))}
+        <div className="grid grid-cols-[6rem_1fr_1fr_1fr_1fr] items-center gap-3 py-1">
+          <span className="font-mono text-xs text-foreground/50">link</span>
+          <Button variant="link">Learn more</Button>
+          <Button variant="link" disabled>Learn more</Button>
+          <Button variant="link" aria-invalid="true">Learn more</Button>
+          <span className="text-xs text-foreground/30">—</span>
+        </div>
       </div>
+
       <div>
-        <p className="mb-2 font-mono text-xs text-foreground/70">Loading — icon-only</p>
+        <p className="mb-3 font-mono text-xs text-foreground/70">Loading — icon-only</p>
         <div className="flex flex-wrap items-center gap-3">
           <Button size="icon-xs" loading aria-label="Loading" />
           <Button size="icon-sm" loading aria-label="Loading" />
           <Button size="icon" loading aria-label="Loading" />
           <Button size="icon-lg" loading aria-label="Loading" />
-          <Button size="icon" variant="accent" loading aria-label="Loading" />
+          <Button size="icon" variant="primary" loading aria-label="Loading" />
           <Button size="icon" variant="outline" loading aria-label="Loading" />
           <Button size="icon" variant="ghost" loading aria-label="Loading" />
         </div>
       </div>
+
+      <div>
+        <p className="mb-2 font-mono text-xs text-foreground/70">
+          Async feedback — success / error
+        </p>
+        <p className="mb-3 text-xs text-muted-foreground">
+          Parent sets <span className="font-mono">status</span> after the async operation resolves, then clears it after a timeout.
+          Used for AI operations, saves, submissions — anything with latency and an outcome.
+        </p>
+        <div className="space-y-2">
+          {(['action', 'primary', 'outline', 'ghost'] as const).map((variant) => (
+            <div key={variant} className="flex items-center gap-3">
+              <span className="w-20 shrink-0 font-mono text-xs text-foreground/50">{variant}</span>
+              <Button variant={variant} status="success">Save changes</Button>
+              <Button variant={variant} status="error">Save changes</Button>
+              <Button size="icon" variant={variant} status="success" aria-label="Saved" />
+              <Button size="icon" variant={variant} status="error" aria-label="Failed" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  ),
+}
+
+// ─── Full Width ───────────────────────────────────────────────────────────────
+
+export const FullWidth: Story = {
+  name: 'Full Width',
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div className="w-80 space-y-2">
+      <Button fullWidth>Continue</Button>
+      <Button fullWidth variant="outline">Cancel</Button>
+      <Button fullWidth variant="ghost" loading>Saving…</Button>
     </div>
   ),
 }
@@ -402,7 +457,7 @@ export const AsChild: Story = {
   render: () => (
     <div className="flex flex-wrap gap-3">
       <Button asChild>
-        <a href="#" onClick={(e) => e.preventDefault()}>Default as anchor</a>
+        <a href="#" onClick={(e) => e.preventDefault()}>Action as anchor</a>
       </Button>
       <Button asChild variant="outline">
         <a href="#" onClick={(e) => e.preventDefault()}>Outline as anchor</a>

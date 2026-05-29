@@ -144,7 +144,7 @@ function DocumentViewLayout() {
           <Button variant="outline" size="sm">
             <Save /> Save version
           </Button>
-          <Button variant="default" size="sm">
+          <Button variant="action" size="sm">
             Continue <ChevronDown />
           </Button>
           <Button variant="ghost" size="icon-sm" aria-label="More options">
@@ -259,7 +259,7 @@ function DocumentViewLayout() {
                 <Button variant="ghost" size="icon-sm" aria-label="Voice input">
                   <Mic />
                 </Button>
-                <Button variant="default" size="icon-sm" aria-label="Send message">
+                <Button variant="action" size="icon-sm" aria-label="Send message">
                   <ArrowUp />
                 </Button>
               </div>

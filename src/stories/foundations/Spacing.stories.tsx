@@ -9,14 +9,19 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const tokens = [
-  { name: 'space-1',  variable: '--space-1',  value: '0.25rem', px: '4px'  },
-  { name: 'space-2',  variable: '--space-2',  value: '0.5rem',  px: '8px'  },
-  { name: 'space-3',  variable: '--space-3',  value: '0.75rem', px: '12px' },
-  { name: 'space-4',  variable: '--space-4',  value: '1rem',    px: '16px' },
-  { name: 'space-6',  variable: '--space-6',  value: '1.5rem',  px: '24px' },
-  { name: 'space-8',  variable: '--space-8',  value: '2rem',    px: '32px' },
-  { name: 'space-12', variable: '--space-12', value: '3rem',    px: '48px' },
-  { name: 'space-16', variable: '--space-16', value: '4rem',    px: '64px' },
+  { name: 'space-0-5', variable: '--space-0-5', value: '0.125rem', px: '2px'  },
+  { name: 'space-1',   variable: '--space-1',   value: '0.25rem',  px: '4px'  },
+  { name: 'space-1-5', variable: '--space-1-5', value: '0.375rem', px: '6px'  },
+  { name: 'space-2',   variable: '--space-2',   value: '0.5rem',   px: '8px'  },
+  { name: 'space-2-5', variable: '--space-2-5', value: '0.625rem', px: '10px' },
+  { name: 'space-3',   variable: '--space-3',   value: '0.75rem',  px: '12px' },
+  { name: 'space-4',   variable: '--space-4',   value: '1rem',     px: '16px' },
+  { name: 'space-5',   variable: '--space-5',   value: '1.25rem',  px: '20px' },
+  { name: 'space-6',   variable: '--space-6',   value: '1.5rem',   px: '24px' },
+  { name: 'space-8',   variable: '--space-8',   value: '2rem',     px: '32px' },
+  { name: 'space-10',  variable: '--space-10',  value: '2.5rem',   px: '40px' },
+  { name: 'space-12',  variable: '--space-12',  value: '3rem',     px: '48px' },
+  { name: 'space-16',  variable: '--space-16',  value: '4rem',     px: '64px' },
 ]
 
 export const Scale: Story = {

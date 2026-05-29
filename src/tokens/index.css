@@ -14,8 +14,10 @@
        ================================= */
   
     --color-purple-900: #2D1B69;
+    --color-purple-700: #6D28D9; /* hover on solid purple */
     --color-purple-600: #7C3AED;
-    --color-purple-400: #A78BFA; /* Lighter purple for dark mode text readability */
+    --color-purple-400: #A78BFA; /* dark mode active tints */
+    --color-purple-300: #C4B5FD; /* dark mode secondary foreground */
     --color-purple-100: #EDE9FE;
   
     --color-orange-500: #F97316;
@@ -44,6 +46,7 @@
     --color-warm-50: #F6F6F4;
     --color-warm-100: #F3F3F1;
     --color-warm-200: #EBEAE6;
+    --color-warm-border: #E8E8E5; /* structural borders and input strokes */
   
     /* =================================
        Dark mode surfaces
@@ -53,19 +56,22 @@
     --color-dark-950: #232426; /* refined */
     --color-dark-900: #2A2B2E;
     --color-dark-800: #323438;
-    --color-dark-700: #3A3C40; /* ADDED */
-  
-    --color-dark-border: #3A3C40;
+    --color-dark-700: #3A3C40;
+    --color-dark-border: var(--color-dark-700); /* alias — same value */
   
     /* =================================
        Status primitives
        ================================= */
   
     --color-error: #EF4444;
-  
+
     --color-error-light: #B91C1C;
     --color-error-dark: #FCA5A5;
-  
+
+    --color-error-50: #FEF2F2;   /* destructive subtle bg (light) */
+    --color-error-100: #FEE2E2;  /* destructive subtle hover (light) */
+    --color-error-200: #FCA5A5;  /* destructive border (light) */
+
     --color-success: #22C55E;
     --color-warning: #F59E0B;
   }
@@ -107,6 +113,8 @@
     --secondary: var(--color-purple-100);    /* tertiary brand-tinted surface — filters, tags, chips */
     --secondary-foreground: var(--color-purple-600);
 
+    --link: var(--color-purple-600);         /* inline link / link-variant button text */
+
     --accent: var(--color-orange-500);       /* reserved for decorative highlights, not interactive */
     --accent-foreground: var(--color-white);
 
@@ -125,17 +133,17 @@
     --destructive: var(--color-error);
     --destructive-foreground: var(--color-white);
 
-    --destructive-text: var(--color-error-light);  /* text inside destructive surfaces */
-    --destructive-subtle: #FEF2F2;                  /* button / chip background */
-    --destructive-subtle-hover: #FEE2E2;             /* button / chip hover */
-    --destructive-border: #FCA5A5;                  /* button / chip border */
+    --destructive-text: var(--color-error-light);     /* text inside destructive surfaces */
+    --destructive-subtle: var(--color-error-50);      /* button / chip background */
+    --destructive-subtle-hover: var(--color-error-100); /* button / chip hover */
+    --destructive-border: var(--color-error-200);     /* button / chip border */
 
     /* =================================
        Inputs / borders
        ================================= */
 
-    --border: #E8E8E5;                       /* structural dividers and outlines */
-    --input: #E8E8E5;                        /* form field borders */
+    --border: var(--color-warm-border);       /* structural dividers and outlines */
+    --input: var(--color-warm-border);        /* form field borders */
 
     --ring: var(--color-purple-600);         /* keyboard focus ring — always brand purple */
 
@@ -166,7 +174,7 @@
     --surface-hover: rgba(0,0,0,0.035);
   
     /* selected states */
-    --surface-active: rgba(124,58,237,0.08);
+    --surface-active: color-mix(in srgb, var(--color-purple-600) 8%, transparent);
   
     /* =================================
        NEW — Workspace semantics
@@ -182,18 +190,31 @@
        NEW — Active states
        ================================= */
   
-    --active-bg: #EEE7FF;
-    --active-fg: #6D4AFF;
+    --active-bg: var(--color-purple-100);
+    --active-fg: var(--color-purple-700);
   
     /* =================================
        Interaction
+       Static fallback first, color-mix enhancement second.
+       Focus ring uses @supports because a missing focus ring
+       is an accessibility failure, not just a visual glitch.
        ================================= */
-  
+
     --focus-ring:
       0 0 0 2px var(--color-white),
-      0 0 0 4px rgba(124,58,237,0.45);
-  
-    --overlay: rgba(45, 27, 105, 0.6);
+      0 0 0 4px rgba(124, 58, 237, 0.45);   /* fallback — matches purple-600 at 45% */
+
+    --overlay: rgba(45, 27, 105, 0.6);       /* fallback — matches purple-900 at 60% */
+  }
+
+  @supports (color: color-mix(in srgb, red, blue)) {
+    :root {
+      --focus-ring:
+        0 0 0 2px var(--color-white),
+        0 0 0 4px color-mix(in srgb, var(--color-purple-600) 45%, transparent);
+
+      --overlay: color-mix(in srgb, var(--color-purple-900) 60%, transparent);
+    }
   }
   
   
@@ -224,8 +245,10 @@
     --primary: var(--color-purple-600);
     --primary-foreground: var(--color-white);
   
-    --secondary: rgba(167,139,250,0.12);
-    --secondary-foreground: #C4B5FD;
+    --secondary: color-mix(in srgb, var(--color-purple-400) 12%, transparent);
+    --secondary-foreground: var(--color-purple-100);  /* near-white lavender — readable on dark tinted surface */
+
+    --link: var(--color-purple-100);         /* near-white lavender — readable link text on dark backgrounds */
   
     --accent: var(--color-orange-500);
     --accent-foreground: var(--color-white);
@@ -275,11 +298,11 @@
   
     --surface-subtle: #26282B;
   
-    --surface-elevated: rgba(42,43,46,0.9);
-  
+    --surface-elevated: color-mix(in srgb, var(--color-dark-900) 90%, transparent);
+
     --surface-hover: rgba(255,255,255,0.045);
-  
-    --surface-active: rgba(167,139,250,0.12);
+
+    --surface-active: color-mix(in srgb, var(--color-purple-400) 12%, transparent);
   
     /* =================================
        NEW — Workspace semantics
@@ -287,7 +310,7 @@
   
     --workspace-canvas: var(--background);
     --workspace-sidebar: var(--card);
-    --workspace-toolbar: rgba(42,43,46,0.72);
+    --workspace-toolbar: color-mix(in srgb, var(--color-dark-900) 72%, transparent);
   
     --document-surface: #2B2D31;
   
@@ -295,18 +318,26 @@
        NEW — Active states
        ================================= */
   
-    --active-bg: rgba(167,139,250,0.14);
-    --active-fg: #C4B5FD;
+    --active-bg: color-mix(in srgb, var(--color-purple-400) 14%, transparent);
+    --active-fg: var(--color-purple-300);
   
     /* =================================
        Interaction
        ================================= */
-  
+
     --focus-ring:
       0 0 0 2px var(--color-dark-950),
-      0 0 0 4px rgba(167,139,250,0.5);
-  
-    --overlay: rgba(0,0,0,0.6);
+      0 0 0 4px rgba(167, 139, 250, 0.5);   /* fallback — matches purple-400 at 50% */
+
+    --overlay: rgba(0, 0, 0, 0.6);
+  }
+
+  @supports (color: color-mix(in srgb, red, blue)) {
+    .dark {
+      --focus-ring:
+        0 0 0 2px var(--color-dark-950),
+        0 0 0 4px color-mix(in srgb, var(--color-purple-400) 50%, transparent);
+    }
   }
   
   
@@ -559,7 +590,9 @@
   
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
-  
+
+    --color-link: var(--link);
+
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
   
@@ -639,3 +672,159 @@
     --radius-xl:   1rem;      /* 16px */
     --radius-full: 9999px;
   }
+
+
+/* =========================
+   RADIX THEMES BRIDGE
+   Maps Nuwacom tokens onto Radix Themes' CSS variable system.
+   Must be imported AFTER @radix-ui/themes/styles.css to win the cascade.
+
+   Usage: <Theme accentColor="violet" grayColor="mauve" radius="medium">
+
+   Structure:
+   1. .radix-themes          → accent, surfaces, typography, radius
+   2. .radix-themes[data-gray-color] → full 12-step gray scale + alpha (light)
+   3. .dark .radix-themes    → accent + surfaces (dark)
+   4. .dark .radix-themes[data-gray-color] → full gray scale + alpha (dark)
+
+   The [data-gray-color] selector matches Radix's own specificity for gray
+   overrides (set via data-gray-color="mauve" on the Theme element), so our
+   values win by source order when this file loads after Radix's CSS.
+   ========================= */
+
+
+/* ─── Accent + Surfaces + Meta (light) ─────────────────────────────────────── */
+
+.radix-themes {
+  /* Accent — purple interactive states */
+  --accent-9:        var(--color-purple-600);  /* solid fill */
+  --accent-10:       var(--color-purple-700);  /* hover on solid */
+  --accent-contrast: var(--color-white);       /* text on accent-9 */
+  --accent-surface:  var(--color-purple-100);  /* soft variant background */
+
+  /* Semantic surface overrides — these live directly on .radix-themes in Radix */
+  --color-background:        var(--background);        /* page/app background  */
+  --color-surface:           var(--surface-subtle);    /* subtle nested surface */
+  --color-panel-solid:       var(--card);              /* Card, Popover, Dialog */
+  --color-panel-translucent: var(--surface-elevated);  /* frosted panel variant */
+  --color-overlay:           var(--overlay);           /* modal backdrop */
+
+  /* Typography */
+  --default-font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  --default-font-size:   var(--font-size-sm);
+
+  /* Radius */
+  --default-radius: var(--radius-md);
+}
+
+
+/* ─── Gray scale — light ────────────────────────────────────────────────────── */
+/*
+   Step mapping against our warm token palette:
+   1  page background     → warm-50
+   2  subtle background   → warm-100
+   3  component bg        → warm-200
+   4  hovered component   → between warm-200 and warm-border
+   5  active/selected     → between warm-border and neutral-200
+   6  subtle border       → warm-border
+   7  UI border           → neutral-200
+   8  hovered border      → neutral-300
+   9  solid bg (muted)    → neutral-500
+   10 hovered solid       → neutral-700
+   11 low-contrast text   → neutral-500
+   12 high-contrast text  → neutral-900
+*/
+
+.radix-themes[data-gray-color] {
+  /* Solid steps */
+  --gray-1:  var(--color-warm-50);
+  --gray-2:  var(--color-warm-100);
+  --gray-3:  var(--color-warm-200);
+  --gray-4:  color-mix(in srgb, var(--color-warm-200) 55%, var(--color-warm-border));
+  --gray-5:  color-mix(in srgb, var(--color-warm-border) 60%, var(--color-neutral-200));
+  --gray-6:  var(--color-warm-border);
+  --gray-7:  var(--color-neutral-200);
+  --gray-8:  var(--color-neutral-300);
+  --gray-9:  var(--color-neutral-500);
+  --gray-10: var(--color-neutral-700);
+  --gray-11: var(--color-neutral-500);
+  --gray-12: var(--color-neutral-900);
+
+  /* Alpha steps — dark ink on warm paper */
+  --gray-a1:  color-mix(in srgb, var(--color-neutral-900)  1.5%, transparent);
+  --gray-a2:  color-mix(in srgb, var(--color-neutral-900)  3%,   transparent);
+  --gray-a3:  color-mix(in srgb, var(--color-neutral-900)  6%,   transparent);
+  --gray-a4:  color-mix(in srgb, var(--color-neutral-900)  9%,   transparent);
+  --gray-a5:  color-mix(in srgb, var(--color-neutral-900)  12%,  transparent);
+  --gray-a6:  color-mix(in srgb, var(--color-neutral-900)  14%,  transparent);
+  --gray-a7:  color-mix(in srgb, var(--color-neutral-900)  18%,  transparent);
+  --gray-a8:  color-mix(in srgb, var(--color-neutral-900)  25%,  transparent);
+  --gray-a9:  color-mix(in srgb, var(--color-neutral-900)  52%,  transparent);
+  --gray-a10: color-mix(in srgb, var(--color-neutral-900)  62%,  transparent);
+  --gray-a11: color-mix(in srgb, var(--color-neutral-900)  55%,  transparent);
+  --gray-a12: color-mix(in srgb, var(--color-neutral-900)  93%,  transparent);
+}
+
+
+/* ─── Accent + Surfaces (dark) ──────────────────────────────────────────────── */
+
+.dark .radix-themes {
+  --accent-9:        var(--color-purple-600);
+  --accent-10:       var(--color-purple-700);
+  --accent-contrast: var(--color-white);
+  --accent-surface:  color-mix(in srgb, var(--color-purple-400) 12%, transparent);
+
+  --color-background:        var(--background);
+  --color-surface:           var(--surface-subtle);
+  --color-panel-solid:       var(--card);
+  --color-panel-translucent: var(--surface-elevated);
+  --color-overlay:           var(--overlay);
+}
+
+
+/* ─── Gray scale — dark ─────────────────────────────────────────────────────── */
+/*
+   Step mapping against our dark token palette:
+   1  page background     → dark-950
+   2  subtle background   → dark-900
+   3  component bg        → dark-800
+   4  hovered component   → dark-700
+   5  active/selected     → between dark-700 and neutral-700
+   6  subtle border       → dark-border (= dark-700)
+   7  UI border           → between dark-border and neutral-700
+   8  hovered border      → neutral-700
+   9  solid bg (muted)    → neutral-500
+   10 hovered solid       → neutral-400
+   11 low-contrast text   → neutral-400
+   12 high-contrast text  → neutral-100
+*/
+
+.dark .radix-themes[data-gray-color] {
+  /* Solid steps */
+  --gray-1:  var(--color-dark-950);
+  --gray-2:  var(--color-dark-900);
+  --gray-3:  var(--color-dark-800);
+  --gray-4:  var(--color-dark-700);
+  --gray-5:  color-mix(in srgb, var(--color-dark-700) 50%, var(--color-neutral-700));
+  --gray-6:  var(--color-dark-border);
+  --gray-7:  color-mix(in srgb, var(--color-dark-border) 40%, var(--color-neutral-700));
+  --gray-8:  var(--color-neutral-700);
+  --gray-9:  var(--color-neutral-500);
+  --gray-10: var(--color-neutral-400);
+  --gray-11: var(--color-neutral-400);
+  --gray-12: var(--color-neutral-100);
+
+  /* Alpha steps — light ink on dark surfaces */
+  --gray-a1:  color-mix(in srgb, white  1.5%, transparent);
+  --gray-a2:  color-mix(in srgb, white  3%,   transparent);
+  --gray-a3:  color-mix(in srgb, white  6%,   transparent);
+  --gray-a4:  color-mix(in srgb, white  9%,   transparent);
+  --gray-a5:  color-mix(in srgb, white  12%,  transparent);
+  --gray-a6:  color-mix(in srgb, white  14%,  transparent);
+  --gray-a7:  color-mix(in srgb, white  18%,  transparent);
+  --gray-a8:  color-mix(in srgb, white  26%,  transparent);
+  --gray-a9:  color-mix(in srgb, white  52%,  transparent);
+  --gray-a10: color-mix(in srgb, white  60%,  transparent);
+  --gray-a11: color-mix(in srgb, white  70%,  transparent);
+  --gray-a12: color-mix(in srgb, white  93%,  transparent);
+}

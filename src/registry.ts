@@ -32,10 +32,10 @@ export const registry: Record<string, ComponentEntry> = {
     description: 'Primary interactive element. Polymorphic — renders as <button> or any element via asChild.',
     variants: {
       variant: {
-        default:     'Primary CTA — high-contrast black/white fill. The single most important action on a surface.',
-        accent:      'Brand purple fill — feature actions, active navigation states, brand-flavoured CTAs.',
-        outline:     'Secondary action — bordered, no fill. Pair with default.',
-        secondary:   'Tertiary action — subtle tonal fill. Low emphasis.',
+        action:      'Primary CTA — high-contrast black/white fill. The single most important action on a surface.',
+        primary:     'Brand purple fill — feature actions, active navigation states, brand-flavoured CTAs.',
+        outline:     'Secondary action — bordered, no fill. Pair with action.',
+        soft:        'Tertiary brand-tinted fill — filters, chips, contextual actions.',
         ghost:       'No background until hovered. Toolbars, sidebars, icon rows.',
         destructive: 'Red tint. Delete, remove, irreversible actions only.',
         link:        'Inline text link. Use inside prose or as a text action.',
@@ -60,7 +60,7 @@ export const registry: Record<string, ComponentEntry> = {
     ],
     avoid: [
       'Non-interactive elements (use a <span> or <div> instead)',
-      'Multiple default-variant buttons on the same surface',
+      'Multiple action-variant buttons on the same surface',
     ],
     relatedTo: ['Input', 'Badge'],
   },
